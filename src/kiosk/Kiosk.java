@@ -42,19 +42,23 @@ public class Kiosk {
                         menu.printMenuItems();
                     }
                 }
+
             } catch (InputMismatchException | IndexOutOfBoundsException e) {
                 System.out.println("올바른 숫자를 입력하세요.");
                 sc.nextLine();
                 continue;
             }
 
+            System.out.println("0.뒤로가기\t|\t뒤로가기");
             System.out.println("=======구매할 물품을 골라주세요=======");
 
             //상품 선택
             int selectMerchandise = -1;
             try {
                 selectMerchandise = sc.nextInt();
-
+                if (selectMerchandise == 0) {
+                    continue;
+                }
                 System.out.println("선택한 품목 :\t"
                         + categoryMenu.get(selectCategory - 1).getMenuItems().get(selectMerchandise - 1).getName() + "| W"
                         + categoryMenu.get(selectCategory - 1).getMenuItems().get(selectMerchandise - 1).getPrice() + "|\t"
