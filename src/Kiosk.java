@@ -5,9 +5,9 @@ import java.util.Scanner;
 
 public class Kiosk {
     //속성
-    List<Menu> categoryMenu;
-    boolean isKiosk = true;
-    Scanner sc = new Scanner(System.in);
+    private List<Menu> categoryMenu;
+    private boolean isKiosk = true;
+    private Scanner sc = new Scanner(System.in);
 
     //생성자
     public Kiosk(Menu categoryMenu) {
@@ -38,6 +38,7 @@ public class Kiosk {
             }
             System.out.println("====="+categoryMenu.get(selectCategory-1).getCategory()+"=====");
             for (Menu menu : categoryMenu) {
+                /* 선택한 메뉴 프린트 */
                 if(menu.getCategory().equals(categoryMenu.get(selectCategory-1).getCategory())){
                     menu.printMenuItems();
                 }
@@ -45,7 +46,7 @@ public class Kiosk {
 
             System.out.println("=======구매할 물품을 골라주세요=======");
 
-            //
+            //상품 선택
             int selectMerchandise = -1;
             try {
                 selectMerchandise = sc.nextInt();
@@ -53,6 +54,8 @@ public class Kiosk {
                 System.out.println("올바른 숫자를 입력하세요.");
                 sc.nextLine();
             }
+
+
 
             System.out.println("선택한 품목 :\t"
                     + categoryMenu.get(selectCategory-1).getMenuItems().get(selectMerchandise-1).getName() + "| W"

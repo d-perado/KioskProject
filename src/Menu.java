@@ -8,7 +8,7 @@ public class Menu {
     private List<MenuItem> menuItems= new ArrayList<>();
 
     //생성자
-    Menu(String category) {
+    public Menu(String category) {
         this.category = category;
     }
 
@@ -30,10 +30,11 @@ public class Menu {
 
     //메뉴아이템 전체리스트 반환 함수
     public List<MenuItem> getMenuItems(){
-        return this.menuItems;
+        return new ArrayList<>(this.menuItems);
     }
-
-    public void setMenuItems(MenuItem menuItem){
+    
+    //메뉴아이템추가
+    public void addMenuItems(MenuItem menuItem){
         this.menuItems.add(menuItem);
     }
 
