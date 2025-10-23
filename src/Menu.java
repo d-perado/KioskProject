@@ -33,5 +33,9 @@ public class Menu {
         return this.menuItems;
     }
 
+    public void setMenuItems(MenuItem menuItem){
+        this.menuItems.add(menuItem);
+    }
+
 
 }
