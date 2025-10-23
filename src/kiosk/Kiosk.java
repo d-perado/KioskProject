@@ -65,9 +65,6 @@ public class Kiosk {
                 sc.nextLine();
                 continue;
             }
-
-            //사용자 입력에 따른 출력변화
-
             System.out.println();
         }
 
