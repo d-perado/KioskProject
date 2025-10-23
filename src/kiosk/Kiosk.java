@@ -1,3 +1,5 @@
+package kiosk;
+
 import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.List;
@@ -20,28 +22,30 @@ public class Kiosk {
         while (this.isKiosk) {
             //메뉴 카테고리 출력
             System.out.println("[ Main Menu ]");
-            for (int i = 0; i < categoryMenu.size(); i++){
-                System.out.println((i+1)+"."+categoryMenu.get(i).getCategory());
+            for (int i = 0; i < categoryMenu.size(); i++) {
+                System.out.println((i + 1) + "." + categoryMenu.get(i).getCategory());
             }
 
             int selectCategory = -1; // 카테고리 사용자 입력
             System.out.println("0.종료\t|\t종료");
             try {
                 selectCategory = sc.nextInt();
-            } catch (InputMismatchException e) {
+
+                if (selectCategory == 0) {
+                    exit();
+                    continue;
+                }
+                System.out.println("=====" + categoryMenu.get(selectCategory - 1).getCategory() + "=====");
+                for (Menu menu : categoryMenu) {
+                    /* 선택한 메뉴 프린트 */
+                    if (menu.getCategory().equals(categoryMenu.get(selectCategory - 1).getCategory())) {
+                        menu.printMenuItems();
+                    }
+                }
+            } catch (InputMismatchException | IndexOutOfBoundsException e) {
                 System.out.println("올바른 숫자를 입력하세요.");
                 sc.nextLine();
-            }
-            if (selectCategory == 0){
-                exit();
                 continue;
-            }
-            System.out.println("====="+categoryMenu.get(selectCategory-1).getCategory()+"=====");
-            for (Menu menu : categoryMenu) {
-                /* 선택한 메뉴 프린트 */
-                if(menu.getCategory().equals(categoryMenu.get(selectCategory-1).getCategory())){
-                    menu.printMenuItems();
-                }
             }
 
             System.out.println("=======구매할 물품을 골라주세요=======");
@@ -50,18 +54,17 @@ public class Kiosk {
             int selectMerchandise = -1;
             try {
                 selectMerchandise = sc.nextInt();
-            } catch (InputMismatchException e) {
+
+                System.out.println("선택한 품목 :\t"
+                        + categoryMenu.get(selectCategory - 1).getMenuItems().get(selectMerchandise - 1).getName() + "| W"
+                        + categoryMenu.get(selectCategory - 1).getMenuItems().get(selectMerchandise - 1).getPrice() + "|\t"
+                        + categoryMenu.get(selectCategory - 1).getMenuItems().get(selectMerchandise - 1).getInformation());
+
+            } catch (InputMismatchException | IndexOutOfBoundsException e) {
                 System.out.println("올바른 숫자를 입력하세요.");
                 sc.nextLine();
+                continue;
             }
-
-
-
-            System.out.println("선택한 품목 :\t"
-                    + categoryMenu.get(selectCategory-1).getMenuItems().get(selectMerchandise-1).getName() + "| W"
-                    + categoryMenu.get(selectCategory-1).getMenuItems().get(selectMerchandise-1).getPrice() + "|\t"
-                    + categoryMenu.get(selectCategory-1).getMenuItems().get(selectMerchandise-1).getInformation());
-
 
             //사용자 입력에 따른 출력변화
 

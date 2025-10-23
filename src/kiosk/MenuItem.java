@@ -1,3 +1,5 @@
+package kiosk;
+
 public class MenuItem {
 
     //속성
