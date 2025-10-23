@@ -4,8 +4,8 @@ import java.util.List;
 public class Menu {
 
     //속성
-    public String category;
-    public List<MenuItem> menuItems= new ArrayList<>();
+    private String category;
+    private List<MenuItem> menuItems= new ArrayList<>();
 
     //생성자
     Menu(String category) {
@@ -22,9 +22,9 @@ public class Menu {
     public void printMenuItems() {
         int i=1;
         for(MenuItem menuItem : this.menuItems){
-            System.out.printf("%2d. %-20s| W%-5.1f|\t%-5s\n", i++, menuItem.name
-                    , menuItem.price
-                    , menuItem.information);
+            System.out.printf("%2d. %-20s| W%-5.1f|\t%-5s\n", i++, menuItem.getName()
+                    , menuItem.getPrice()
+                    , menuItem.getInformation());
         }
     }
 

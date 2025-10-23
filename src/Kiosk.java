@@ -21,7 +21,7 @@ public class Kiosk {
             //메뉴 카테고리 출력
             System.out.println("[ Main Menu ]");
             for (int i = 0; i < categoryMenu.size(); i++){
-                System.out.println((i+1)+"."+categoryMenu.get(i).category);
+                System.out.println((i+1)+"."+categoryMenu.get(i).getCategory());
             }
 
             int selectCategory = -1; // 카테고리 사용자 입력
@@ -37,7 +37,7 @@ public class Kiosk {
                 continue;
             }
             for (Menu menu : categoryMenu) {
-                if(menu.category.equals(categoryMenu.get(selectCategory-1).category)){
+                if(menu.getCategory().equals(categoryMenu.get(selectCategory-1).getCategory())){
                     menu.printMenuItems();
                 }
             }
@@ -54,9 +54,9 @@ public class Kiosk {
             }
 
             System.out.println("선택한 품목 :\t"
-                    + categoryMenu.get(selectCategory-1).menuItems.get(selectMerchandise-1).name + "| W"
-                    + categoryMenu.get(selectCategory-1).menuItems.get(selectMerchandise-1).price + "|\t"
-                    + categoryMenu.get(selectCategory-1).menuItems.get(selectMerchandise-1).information);
+                    + categoryMenu.get(selectCategory-1).getMenuItems().get(selectMerchandise-1).getName() + "| W"
+                    + categoryMenu.get(selectCategory-1).getMenuItems().get(selectMerchandise-1).getPrice() + "|\t"
+                    + categoryMenu.get(selectCategory-1).getMenuItems().get(selectMerchandise-1).getInformation());
 
 
             //사용자 입력에 따른 출력변화

@@ -1,9 +1,9 @@
 public class MenuItem {
 
     //속성
-    String name;
-    double price;
-    String information;
+    private String name;
+    private double price;
+    private String information;
 
     //생성자
     MenuItem(String name, double price, String information){
@@ -13,6 +13,16 @@ public class MenuItem {
     }
 
     //기능
+    //게터
+    public String getName() {
+        return name;
+    }
 
+    public double getPrice() {
+        return price;
+    }
 
+    public String getInformation() {
+        return information;
+    }
 }
