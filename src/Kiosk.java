@@ -36,6 +36,7 @@ public class Kiosk {
                 exit();
                 continue;
             }
+            System.out.println("====="+categoryMenu.get(selectCategory-1).getCategory()+"=====");
             for (Menu menu : categoryMenu) {
                 if(menu.getCategory().equals(categoryMenu.get(selectCategory-1).getCategory())){
                     menu.printMenuItems();
