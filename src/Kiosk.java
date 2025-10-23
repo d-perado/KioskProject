@@ -76,7 +76,7 @@ public class Kiosk {
     }
 
     //키오스크 카테고리메뉴 추가
-    public void addCategory(Menu menu){
+    public void addCategory(Menu menu) {
         this.categoryMenu.add(menu);
     }
 }

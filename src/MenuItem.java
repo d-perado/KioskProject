@@ -6,7 +6,7 @@ public class MenuItem {
     private String information;
 
     //생성자
-    MenuItem(String name, double price, String information){
+    MenuItem(String name, double price, String information) {
         this.name = name;
         this.price = price;
         this.information = information;

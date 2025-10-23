@@ -21,7 +21,7 @@ public class Menu {
     //메뉴아이템 전체 출력
     public void printMenuItems() {
         int i=1;
-        for(MenuItem menuItem : this.menuItems){
+        for(MenuItem menuItem : this.menuItems) {
             System.out.printf("%2d. %-20s| W%-5.1f|\t%-5s\n", i++, menuItem.getName()
                     , menuItem.getPrice()
                     , menuItem.getInformation());
@@ -29,12 +29,12 @@ public class Menu {
     }
 
     //메뉴아이템 전체리스트 반환 함수
-    public List<MenuItem> getMenuItems(){
+    public List<MenuItem> getMenuItems() {
         return new ArrayList<>(this.menuItems);
     }
     
     //메뉴아이템추가
-    public void addMenuItems(MenuItem menuItem){
+    public void addMenuItems(MenuItem menuItem) {
         this.menuItems.add(menuItem);
     }
 
