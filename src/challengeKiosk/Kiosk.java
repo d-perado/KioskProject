@@ -46,11 +46,10 @@ public class Kiosk {
                     System.out.println("아래와 같이 주문하시겠습니까?");
                     System.out.println("[ Orders ]");
                     double totalPrice = 0;
-                    for (int i = 0; i < cart.getSelectedItems().size(); i++) {
-                        System.out.println((i+1)+". "+cart.getSelectedItems().get(i).getName()+"\t| W"
-                        + cart.getSelectedItems().get(i).getPrice() + "\t|"
-                        + cart.getSelectedItems().get(i).getInformation());
-                        totalPrice += cart.getSelectedItems().get(i).getPrice();
+                    int cnt = 1;
+                    for(MenuItem key : cart.getSelectedItems().keySet()){
+                        System.out.printf("%2d. %10s | W %-5.1f | %d개 | %s\n",cnt++,key.getName(),key.getPrice(),cart.getSelectedItems().get(key),key.getInformation());
+                        totalPrice += cart.getSelectedItems().get(key)*key.getPrice();
                     }
                     System.out.println();
                     System.out.println("[ Total ]");
@@ -101,8 +100,8 @@ public class Kiosk {
                 System.out.println("1.확인\t2.취소");
                 int choiceAddItem = sc.nextInt();
 
-                if(choiceAddItem==1){
-                    cart.addSelectedItem(categoryMenu.get(selectCategory -1).getMenuItems().get(selectMerchandise-1));
+                if (choiceAddItem == 1) {
+                    cart.add(categoryMenu.get(selectCategory-1).getMenuItems().get(selectMerchandise-1));
                     System.out.println(categoryMenu.get(selectCategory - 1).getMenuItems().get(selectMerchandise - 1).getName()+" 이 장바구니에 추가되었습니다.");
                 }
             } catch (InputMismatchException | IndexOutOfBoundsException e) {
