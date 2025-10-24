@@ -9,8 +9,6 @@ public class Cart {
     //속성
     private Map<MenuItem,Integer> selectedItems = new HashMap<>();
 
-
-
     //생성자
 
 
