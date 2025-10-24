@@ -7,8 +7,8 @@ import java.util.Scanner;
 
 public class Kiosk {
     //속성
-    private List<Menu> categoryMenu;
     private boolean isKiosk = true;
+    private List<Menu> categoryMenu;
     private Scanner sc = new Scanner(System.in);
 
     //생성자

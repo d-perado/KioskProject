@@ -10,7 +10,8 @@ public class Kiosk {
     private List<Menu> categoryMenu;
     private boolean isKiosk = true;
     private Scanner sc = new Scanner(System.in);
-
+    private Cart cart = new Cart();
+    
     //생성자
     public Kiosk(Menu categoryMenu) {
         this.categoryMenu = new ArrayList<>();
@@ -28,18 +29,48 @@ public class Kiosk {
 
             int selectCategory = -1; // 카테고리 사용자 입력
             System.out.println("0.종료\t|\t종료");
+            System.out.println();
+            if (!cart.getSelectedItems().isEmpty()) {
+                System.out.println("[ ORDER MENU ]");
+                System.out.println((categoryMenu.size()+1)+".Orders | 장바구니를 확인후 주문합니다.");
+                System.out.println((categoryMenu.size()+2)+".Cancel | 진행중인 주문을 취소합니다.");
+
+            }
             try {
                 selectCategory = sc.nextInt();
 
                 if (selectCategory == 0) {
                     exit();
                     continue;
-                }
-                System.out.println("=====" + categoryMenu.get(selectCategory - 1).getCategory() + "=====");
-                for (Menu menu : categoryMenu) {
-                    /* 선택한 메뉴 프린트 */
-                    if (menu.getCategory().equals(categoryMenu.get(selectCategory - 1).getCategory())) {
-                        menu.printMenuItems();
+                }else if(selectCategory == categoryMenu.size()+1){
+                    System.out.println("아래와 같이 주문하시겠습니까?");
+                    System.out.println("[ Orders ]");
+                    double totalPrice = 0;
+                    for (int i = 0; i < cart.getSelectedItems().size(); i++) {
+                        System.out.println((i+1)+". "+cart.getSelectedItems().get(i).getName()+"\t| W"
+                        + cart.getSelectedItems().get(i).getPrice() + "\t|"
+                        + cart.getSelectedItems().get(i).getInformation());
+                        totalPrice += cart.getSelectedItems().get(i).getPrice();
+                    }
+                    System.out.println();
+                    System.out.println("[ Total ]");
+                    System.out.printf("W %3.1f\n",totalPrice);
+                    System.out.println("1. 주문\t2.메뉴판");
+                    int order = sc.nextInt();
+                    if( order==1 ) {
+                        System.out.printf("주문이 완료되었습니다. 금액은 W %4.1f 입니다.\n",totalPrice);
+                        cart.clearItem();
+                    }
+
+                }else if(selectCategory == categoryMenu.size()+2){
+                    System.out.println("주문을 취소하시겠습니까?");
+                }else {
+                    System.out.println("=====" + categoryMenu.get(selectCategory - 1).getCategory() + "=====");
+                    for (Menu menu : categoryMenu) {
+                        /* 선택한 메뉴 프린트 */
+                        if (menu.getCategory().equals(categoryMenu.get(selectCategory - 1).getCategory())) {
+                            menu.printMenuItems();
+                        }
                     }
                 }
             } catch (InputMismatchException | IndexOutOfBoundsException e) {
@@ -50,18 +81,17 @@ public class Kiosk {
 
             System.out.println("=======구매할 물품을 골라주세요=======");
 
-            //상품 선택
+            //상품 장바구니에 담기
             int selectMerchandise = -1;
             try {
                 selectMerchandise = sc.nextInt();
-
-                System.out.println("선택한 품목 :\t"
-                        + categoryMenu.get(selectCategory - 1).getMenuItems().get(selectMerchandise - 1).getName() + "| W"
-                        + categoryMenu.get(selectCategory - 1).getMenuItems().get(selectMerchandise - 1).getPrice() + "|\t"
-                        + categoryMenu.get(selectCategory - 1).getMenuItems().get(selectMerchandise - 1).getInformation());
+                
+                cart.addSelectedItem(categoryMenu.get(selectCategory -1).getMenuItems().get(selectMerchandise-1));
+                System.out.println(
+                        categoryMenu.get(selectCategory - 1).getMenuItems().get(selectMerchandise - 1).getName() + "를 장바구니에 담았습니다.");
 
             } catch (InputMismatchException | IndexOutOfBoundsException e) {
-                System.out.println("올바른 숫자를 입력하세요.");
+                System.out.println("올바른 숫자를 입력하세요.\n");
                 sc.nextLine();
                 continue;
             }
