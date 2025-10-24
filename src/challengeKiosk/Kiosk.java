@@ -60,11 +60,19 @@ public class Kiosk {
                     if( order==1 ) {
                         System.out.printf("주문이 완료되었습니다. 금액은 W %4.1f 입니다.\n",totalPrice);
                         cart.clearItem();
+                        continue;
                     }
 
                 }else if(selectCategory == categoryMenu.size()+2){
                     System.out.println("주문을 취소하시겠습니까?");
-                }else {
+                    System.out.println("1.취소\t아무키나 입력할시 다시 진행됩니다.");
+                    int cancelOrder = sc.nextInt();
+                    if ( cancelOrder == 1 ){
+                        System.out.println("주문이 취소되었습니다.");
+                        cart.clearItem();
+                        continue;
+                    }
+                } else {
                     System.out.println("=====" + categoryMenu.get(selectCategory - 1).getCategory() + "=====");
                     for (Menu menu : categoryMenu) {
                         /* 선택한 카테고리 출력 */
@@ -79,17 +87,24 @@ public class Kiosk {
                 continue;
             }
 
-            System.out.println("=======구매할 물품을 골라주세요=======");
 
             //상품 장바구니에 담기
             int selectMerchandise = -1;
             try {
                 selectMerchandise = sc.nextInt();
                 
-                cart.addSelectedItem(categoryMenu.get(selectCategory -1).getMenuItems().get(selectMerchandise-1));
                 System.out.println(
-                        categoryMenu.get(selectCategory - 1).getMenuItems().get(selectMerchandise - 1).getName() + "를 장바구니에 담았습니다.");
+                        categoryMenu.get(selectCategory - 1).getMenuItems().get(selectMerchandise - 1).getName() + "\t| W"
+                                + categoryMenu.get(selectCategory - 1).getMenuItems().get(selectMerchandise -1).getPrice() + "\t|"
+                                + categoryMenu.get(selectCategory - 1).getMenuItems().get(selectMerchandise - 1).getInformation());
+                System.out.println("위의 메뉴를 장바구니에 추가하시겠습니까?");
+                System.out.println("1.확인\t2.취소");
+                int choiceAddItem = sc.nextInt();
 
+                if(choiceAddItem==1){
+                    cart.addSelectedItem(categoryMenu.get(selectCategory -1).getMenuItems().get(selectMerchandise-1));
+                    System.out.println(categoryMenu.get(selectCategory - 1).getMenuItems().get(selectMerchandise - 1).getName()+" 이 장바구니에 추가되었습니다.");
+                }
             } catch (InputMismatchException | IndexOutOfBoundsException e) {
                 System.out.println("올바른 숫자를 입력하세요.\n");
                 sc.nextLine();
