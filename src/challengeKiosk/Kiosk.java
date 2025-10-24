@@ -21,7 +21,7 @@ public class Kiosk {
     //기능
     public void start() {
         while (this.isKiosk) {
-            //메뉴 카테고리 출력
+            /* 메뉴 카테고리 출력 */
             System.out.println("[ Main Menu ]");
             for (int i = 0; i < categoryMenu.size(); i++) {
                 System.out.println((i + 1) + "." + categoryMenu.get(i).getCategory());
@@ -38,11 +38,11 @@ public class Kiosk {
             }
             try {
                 selectCategory = sc.nextInt();
-
                 if (selectCategory == 0) {
                     exit();
                     continue;
                 }else if(selectCategory == categoryMenu.size()+1){
+                    /* 장바구니 물품 주문하기 */
                     System.out.println("아래와 같이 주문하시겠습니까?");
                     System.out.println("[ Orders ]");
                     double totalPrice = 0;
@@ -67,7 +67,7 @@ public class Kiosk {
                 }else {
                     System.out.println("=====" + categoryMenu.get(selectCategory - 1).getCategory() + "=====");
                     for (Menu menu : categoryMenu) {
-                        /* 선택한 메뉴 프린트 */
+                        /* 선택한 카테고리 출력 */
                         if (menu.getCategory().equals(categoryMenu.get(selectCategory - 1).getCategory())) {
                             menu.printMenuItems();
                         }
