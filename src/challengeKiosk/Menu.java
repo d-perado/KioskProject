@@ -7,7 +7,7 @@ public class Menu {
 
     //속성
     private String category;
-    private List<MenuItem> menuItems= new ArrayList<>();
+    private List<MenuItem> menuItems = new ArrayList<>();
 
     //생성자
     public Menu(String category) {
@@ -22,8 +22,8 @@ public class Menu {
 
     //메뉴아이템 전체 출력
     public void printMenuItems() {
-        int i=1;
-        for(MenuItem menuItem : this.menuItems) {
+        int i = 1;
+        for (MenuItem menuItem : this.menuItems) {
             System.out.printf("%2d. %-20s| W%-5.1f|\t%-5s\n", i++, menuItem.getName()
                     , menuItem.getPrice()
                     , menuItem.getInformation());
@@ -34,11 +34,10 @@ public class Menu {
     public List<MenuItem> getMenuItems() {
         return new ArrayList<>(this.menuItems);
     }
-    
+
     //메뉴아이템추가
     public void addMenuItems(MenuItem menuItem) {
         this.menuItems.add(menuItem);
     }
-
 
 }

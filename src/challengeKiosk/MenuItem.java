@@ -27,4 +27,10 @@ public class MenuItem {
     public String getInformation() {
         return information;
     }
+
+
+
+    public String toString(){
+        return this.name+"| W " + this.getPrice()+"\t|"+this.information + "\n";
+    }
 }
