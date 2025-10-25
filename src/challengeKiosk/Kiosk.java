@@ -11,7 +11,8 @@ public class Kiosk {
     private boolean isKiosk = true;
     private Scanner sc = new Scanner(System.in);
     private Cart cart = new Cart();
-    
+    private Customer customer = Customer.NOMAL;
+
     //생성자
     public Kiosk(Menu categoryMenu) {
         this.categoryMenu = new ArrayList<>();
@@ -45,14 +46,36 @@ public class Kiosk {
                     System.out.println();
                     System.out.println("[ Total ]");
                     System.out.printf("W %3.1f\n", totalPrice);
-                    System.out.println("1. 주문\t2.메뉴판으로 돌아가기");
+                    System.out.println("1. 주문\t2. 할인혜택보기 \t 3.메뉴판으로 돌아가기 ");
 
                     //사용자 입력
-                    int order = sc.nextInt();
+                    int orderOption = sc.nextInt();
 
-                    if( order == 1 ) {
-                        System.out.printf("주문이 완료되었습니다. 금액은 W %3.1f 입니다.\n", totalPrice);
+                    if (orderOption == 1) { /* 사용자 유형에 따른 총액 계산 */
+                        if(!customer.equals(Customer.NOMAL)){
+                            System.out.println(customer.getOption()+"("+(int)((1.0-customer.getDiscount())*100.0)+"%)의 할인율이 제공되었습니다.");
+                        }
+                        System.out.printf("주문이 완료되었습니다. 총 결제 금액은 W %3.1f 입니다.\n", totalPrice*customer.getDiscount());
                         cart.clearItem();
+                        continue;
+                    } else if (orderOption==2){
+                        System.out.println("============================");
+                        int i = 1;
+                        for(Customer option : Customer.values()){
+                            System.out.println(i + ". " + option.getOption());
+                            i++;
+                        }
+                        System.out.println("사용자 유형을 선택하세요.");
+
+                        int customerOption = -1;
+
+                        customerOption = sc.nextInt();
+
+                        for(Customer option : Customer.values()){
+                            if(option.ordinal() == customerOption-1){
+                                setCustomer(option);
+                            }
+                        }
                         continue;
                     }
 
@@ -88,12 +111,12 @@ public class Kiosk {
             int selectMerchandise = -1;
 
             try {
-
                 selectMerchandise = sc.nextInt();
 
-                if(selectMerchandise == 0){
+                if (selectMerchandise == 0) {
                     continue;
                 }
+
                 System.out.println("======================================");
                 System.out.println(categoryMenu.get(selectCategory - 1).getMenuItems().get(selectMerchandise - 1).toString());
                 System.out.println("위의 메뉴를 장바구니에 추가하시겠습니까?");
@@ -105,6 +128,7 @@ public class Kiosk {
                     cart.add(categoryMenu.get(selectCategory - 1).getMenuItems().get(selectMerchandise - 1));
                     System.out.println(categoryMenu.get(selectCategory - 1).getMenuItems().get(selectMerchandise - 1).getName()+" 이 장바구니에 추가되었습니다.");
                 }
+
             } catch (InputMismatchException | IndexOutOfBoundsException e) {
                 System.out.println("올바른 숫자를 입력하세요.\n");
                 sc.nextLine();
@@ -114,7 +138,6 @@ public class Kiosk {
             System.out.println();
 
         }
-
     }
 
     //키오스크 종료
@@ -125,6 +148,16 @@ public class Kiosk {
     //키오스크 카테고리메뉴 추가
     public void addCategory(Menu menu) {
         this.categoryMenu.add(menu);
+    }
+
+    //사용자 유형 설정
+    public void setCustomer(Customer customer){
+        for(Customer option : Customer.values()){
+            if(option.equals(customer)){
+                System.out.printf("고객님의 할인 유형이 %s로 전환됩니다.\n",option.getOption());
+                this.customer = option;
+            }
+        }
     }
 
     //출력 부
