@@ -11,12 +11,15 @@ public class Kiosk {
     private boolean isKiosk = true;
     private Scanner sc = new Scanner(System.in);
     private Cart cart = new Cart();
-    private Customer customer = Customer.NOMAL;
+    private Customer customer = Customer.NORMAL;
 
     //생성자
     public Kiosk(Menu categoryMenu) {
         this.categoryMenu = new ArrayList<>();
         this.categoryMenu.add(categoryMenu);
+    }
+    public Kiosk() {
+        this.categoryMenu = new ArrayList<>();
     }
 
     //기능
@@ -45,14 +48,15 @@ public class Kiosk {
                     }
                     System.out.println();
                     System.out.println("[ Total ]");
-                    System.out.printf("W %3.1f\n", totalPrice);
-                    System.out.println("1. 주문\t2. 할인혜택보기 \t 3.메뉴판으로 돌아가기 ");
+                    System.out.printf("할인 적용 전 | W %3.1f\n", totalPrice);
+                    System.out.printf("할인 적용 후 | W %3.1f\n", totalPrice * customer.getDiscount());
+                    System.out.println("1. 주문\t2. 할인혜택보기\t3.메뉴판으로 돌아가기 ");
 
                     //사용자 입력
                     int orderOption = sc.nextInt();
 
                     if (orderOption == 1) { /* 사용자 유형에 따른 총액 계산 */
-                        if(!customer.equals(Customer.NOMAL)){
+                        if(!customer.equals(Customer.NORMAL)){
                             System.out.println(customer.getOption()+"("+(int)((1.0-customer.getDiscount())*100.0)+"%)의 할인율이 제공되었습니다.");
                         }
                         System.out.printf("주문이 완료되었습니다. 총 결제 금액은 W %3.1f 입니다.\n", totalPrice*customer.getDiscount());

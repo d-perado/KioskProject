@@ -1,7 +1,7 @@
 package challengeKiosk;
 
 public enum Customer {
-    NOMAL("일반인",1),
+    NORMAL("일반인",1),
     SOLDIER("군인",0.7),
     STUDENT("학생",0.8),
     NATIONAL_MERIT("국가유공자",0.5);
