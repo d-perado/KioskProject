@@ -1,9 +1,7 @@
 package challengeKiosk;
 
-import java.util.ArrayList;
-import java.util.InputMismatchException;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
+import java.util.stream.IntStream;
 
 public class Kiosk {
     //속성
@@ -88,7 +86,7 @@ public class Kiosk {
                 int choiceAddItem = getUserInput("위의 메뉴를 장바구니에 추가하시겠습니까? 1.예 2.아니오",1,2);
 
                 if (choiceAddItem == 1) {
-                    /* 카트 물품 추가 확정 */
+                    /* 장바구니 물품 추가 확정 */
                     addCartItem(selectCategory,selectMerchandise);
                 }
 
@@ -129,7 +127,7 @@ public class Kiosk {
         }
     }
 
-    //카트 메뉴 출력
+    //장바구니 메뉴 출력
     private void displayCartMenu() {
         System.out.println("아래와 같이 주문하시겠습니까?");
         System.out.println("[ Orders ]");
@@ -160,20 +158,16 @@ public class Kiosk {
     //할인 혜택 출력
     private void displayCustomerOption(){
         System.out.println("[ CustomerOptions ]");
-        int i = 1;
-        for(Customer option : Customer.values()){
-            System.out.println(i + ". " + option.getOption());
-            i++;
-        }
+        IntStream.range(0, Customer.values().length)
+                .forEach(i -> System.out.println((i + 1) + ". " + Customer.values()[i].getOption()));
     }
     
     //할인 혜택 변경
     private void selectCustomerOption(int customerOption){
-        for(Customer option : Customer.values()){
-            if(option.ordinal() == customerOption-1){
-                setCustomer(option);
-            }
-        }
+        Arrays.stream(Customer.values())
+                .filter(option -> option.ordinal() == customerOption - 1)
+                .findFirst()
+                .ifPresent(this::setCustomer);
     }
 
     //선택한 카테고리 메뉴 출력
@@ -188,7 +182,7 @@ public class Kiosk {
         System.out.println("0. 뒤로가기");
     }
 
-    //
+    //장바구니에 상품 담기
     private void addCartItem(int selectCategory,int selectMerchandise){
         cart.add(categoryMenu.get(selectCategory - 1).getMenuItems().get(selectMerchandise - 1));
         System.out.println(categoryMenu.get(selectCategory - 1).getMenuItems().get(selectMerchandise - 1).getName()+" 이 장바구니에 추가되었습니다.");
@@ -198,6 +192,7 @@ public class Kiosk {
         System.out.println("주문이 취소되었습니다.");
         cart.clearItem();
     }
+    
     //사용자 입력 예외처리
     private int getUserInput(String message, int min, int max) {
         while (true) {
