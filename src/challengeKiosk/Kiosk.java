@@ -7,7 +7,6 @@ public class Kiosk {
     // 속성
     private boolean isKiosk = true;
     private Customer customer = Customer.NORMAL;
-    private double totalPrice = 0.0;
     private final int EXIT = 0;
 
     private List<Menu> categoryMenu;
@@ -119,11 +118,11 @@ public class Kiosk {
         System.out.println("아래와 같이 주문하시겠습니까?");
         System.out.println("[ Orders ]");
         int cnt = 1;
+        double totalPrice = cart.calculateTotalPrice();
 
         /* 장바구니 물품 출력 */
         for (MenuItem key : cart.getSelectedItems().keySet()) {
             System.out.printf("%2d. %10s | W %-5.1f | %d개 | %s\n", cnt++, key.getName(), key.getPrice(), cart.getSelectedItems().get(key), key.getInformation());
-            totalPrice += cart.getSelectedItems().get(key)*key.getPrice();
         }
         System.out.println();
         System.out.println("[ Total ]");
@@ -137,8 +136,7 @@ public class Kiosk {
         if(!this.customer.equals(Customer.NORMAL)){
             System.out.println(this.customer.getOption()+"("+(int)((1.0-this.customer.getDiscount())*100.0)+"%)의 할인율이 제공되었습니다.");
         }
-        System.out.printf("주문이 완료되었습니다. 총 결제 금액은 W %3.1f 입니다.\n", this.totalPrice*customer.getDiscount());
-        this.totalPrice = 0.0;
+        System.out.printf("주문이 완료되었습니다. 총 결제 금액은 W %3.1f 입니다.\n", cart.calculateTotalPrice()*customer.getDiscount());
         cart.clearItem();
     }
 
