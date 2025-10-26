@@ -53,10 +53,10 @@ public class Kiosk {
                         displayOrderComplete();
                         continue;
                     } else if (orderOption==2){
-                        /* 사용자 유형 변경 */
+                        /* 할인 혜택 변경 */
                         displayCustomerOption();
 
-                        int customerOption = getUserInput("사용자 유형을 선택하세요.",1,Customer.values().length);
+                        int customerOption = getUserInput("할인혜택을 선택하세요.",1,Customer.values().length);
 
                         selectCustomerOption(customerOption);
                         continue;
@@ -106,7 +106,7 @@ public class Kiosk {
         this.categoryMenu.add(menu);
     }
 
-    //사용자 유형 설정
+    //할인 혜택 설정
     private void setCustomer(Customer customer) {
         System.out.printf("고객님의 할인 유형이 %s로 전환됩니다.\n", customer.getOption());
         this.customer = customer;
@@ -157,9 +157,9 @@ public class Kiosk {
         cart.clearItem();
     }
 
-    //사용자 유형 출력
+    //할인 혜택 출력
     private void displayCustomerOption(){
-        System.out.println("============================");
+        System.out.println("[ CustomerOptions ]");
         int i = 1;
         for(Customer option : Customer.values()){
             System.out.println(i + ". " + option.getOption());
@@ -167,7 +167,7 @@ public class Kiosk {
         }
     }
     
-    //사용자 유형 변경
+    //할인 혜택 변경
     private void selectCustomerOption(int customerOption){
         for(Customer option : Customer.values()){
             if(option.ordinal() == customerOption-1){
