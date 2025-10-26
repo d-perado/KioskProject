@@ -12,6 +12,8 @@ public class Kiosk {
     private Scanner sc = new Scanner(System.in);
     private Cart cart = new Cart();
     private Customer customer = Customer.NORMAL;
+    private double totalPrice = 0.0;
+    private final int EXIT = 0;
 
     //생성자
     public Kiosk(Menu categoryMenu) {
@@ -24,72 +26,49 @@ public class Kiosk {
 
     //기능
     public void start() {
+        int selectCategory = -1;
+
         while (this.isKiosk) {
-            int selectCategory = -1;
             /* 메인 메뉴 출력 */
                 displayMainMenu();
-            try {
+
                 //사용자 입력
-                selectCategory = sc.nextInt();
-                if (selectCategory == 0) {
+
+
+                /* Cart에 상품이 담겨있는지에 따라 출력 변화 */
+                if (cart.getSelectedItems().isEmpty()) {
+                    selectCategory = getUserInput("카테고리를 선택해주세요. :",0,categoryMenu.size());
+                } else {
+                    selectCategory = getUserInput("카테고리를 선택해주세요.:" ,0,categoryMenu.size()+2);
+                }
+
+                if (selectCategory == EXIT) {
                     exit();
                     continue;
-                } else if (selectCategory == categoryMenu.size() + 1){
+                } else if (selectCategory == categoryMenu.size() + 1) {
                     /* 장바구니 물품 주문하기 */
-                    System.out.println("아래와 같이 주문하시겠습니까?");
-                    System.out.println("[ Orders ]");
-                    double totalPrice = 0;
-                    int cnt = 1;
+                    displayCartMenu();
 
-                    /* 장바구니 물품 출력 */
-                    for (MenuItem key : cart.getSelectedItems().keySet()) {
-                        System.out.printf("%2d. %10s | W %-5.1f | %d개 | %s\n", cnt++, key.getName(), key.getPrice(), cart.getSelectedItems().get(key), key.getInformation());
-                        totalPrice += cart.getSelectedItems().get(key)*key.getPrice();
-                    }
-                    System.out.println();
-                    System.out.println("[ Total ]");
-                    System.out.printf("할인 적용 전 | W %3.1f\n", totalPrice);
-                    System.out.printf("할인 적용 후 | W %3.1f\n", totalPrice * customer.getDiscount());
-                    System.out.println("1. 주문\t2. 할인혜택보기\t3.메뉴판으로 돌아가기 ");
+                    int orderOption = getUserInput("선택하세요. : ",1,2);
 
-                    //사용자 입력
-                    int orderOption = sc.nextInt();
-
-                    if (orderOption == 1) { /* 사용자 유형에 따른 총액 계산 */
-                        if(!customer.equals(Customer.NORMAL)){
-                            System.out.println(customer.getOption()+"("+(int)((1.0-customer.getDiscount())*100.0)+"%)의 할인율이 제공되었습니다.");
-                        }
-                        System.out.printf("주문이 완료되었습니다. 총 결제 금액은 W %3.1f 입니다.\n", totalPrice*customer.getDiscount());
-                        cart.clearItem();
+                    if (orderOption == 1) {
+                        /* 사용자 유형에 따른 총액 계산 */
+                        orderMenu();
                         continue;
                     } else if (orderOption==2){
-                        System.out.println("============================");
-                        int i = 1;
-                        for(Customer option : Customer.values()){
-                            System.out.println(i + ". " + option.getOption());
-                            i++;
-                        }
-                        System.out.println("사용자 유형을 선택하세요.");
+                        /* 사용자 유형 변경 */
+                        displayCustomerOption();
 
-                        int customerOption = -1;
+                        int customerOption = getUserInput("사용자 유형을 선택하세요.",1,Customer.values().length);
 
-                        customerOption = sc.nextInt();
-
-                        for(Customer option : Customer.values()){
-                            if(option.ordinal() == customerOption-1){
-                                setCustomer(option);
-                            }
-                        }
+                        selectCustomerOption(customerOption);
                         continue;
                     }
 
                 } else if (selectCategory == categoryMenu.size() + 2) {
 
-                    System.out.println("주문을 취소하시겠습니까?");
-                    System.out.println("1.취소\t아무키나 입력할시 다시 진행됩니다.");
-
                     //사용자 입력
-                    int cancelOrder = sc.nextInt();
+                    int cancelOrder = getUserInput("주문을 취소하시겠습니까? 1.취소 2.아니오 : ",1,2);
 
                     if ( cancelOrder == 1 ){
                         System.out.println("주문이 취소되었습니다.");
@@ -97,25 +76,12 @@ public class Kiosk {
                         continue;
                     }
                 } else {
-                    System.out.println("=====" + categoryMenu.get(selectCategory - 1).getCategory() + "=====");
-                    for (Menu menu : categoryMenu) {
-                        /* 선택한 카테고리 출력 */
-                        if (menu.getCategory().equals(categoryMenu.get(selectCategory - 1).getCategory())) {
-                            menu.printMenuItems();
-                        }
-                    }
-                    System.out.println("0. 뒤로가기");
+                    /* 선택한 카테고리의 상품 출력 */
+                    displayCategoryMenu(selectCategory);
                 }
-            } catch (InputMismatchException | IndexOutOfBoundsException e) {
-                System.out.println("올바른 숫자를 입력하세요.");
-                sc.nextLine();
-                continue;
-            }
-            //상품 장바구니에 담기
-            int selectMerchandise = -1;
 
-            try {
-                selectMerchandise = sc.nextInt();
+                /* 상품 선택하기 */
+                int selectMerchandise = getUserInput("상품을 선택해주세요. :",0,categoryMenu.get(selectCategory - 1).getMenuItems().size());
 
                 if (selectMerchandise == 0) {
                     continue;
@@ -123,21 +89,12 @@ public class Kiosk {
 
                 System.out.println("======================================");
                 System.out.println(categoryMenu.get(selectCategory - 1).getMenuItems().get(selectMerchandise - 1).toString());
-                System.out.println("위의 메뉴를 장바구니에 추가하시겠습니까?");
-                System.out.println("1.확인\t2.취소");
 
-                int choiceAddItem = sc.nextInt();
+                int choiceAddItem = getUserInput("위의 메뉴를 장바구니에 추가하시겠습니까? 1.예 2.아니오",1,2);
 
                 if (choiceAddItem == 1) {
-                    cart.add(categoryMenu.get(selectCategory - 1).getMenuItems().get(selectMerchandise - 1));
-                    System.out.println(categoryMenu.get(selectCategory - 1).getMenuItems().get(selectMerchandise - 1).getName()+" 이 장바구니에 추가되었습니다.");
+                    addCartItem(selectCategory,selectMerchandise);
                 }
-
-            } catch (InputMismatchException | IndexOutOfBoundsException e) {
-                System.out.println("올바른 숫자를 입력하세요.\n");
-                sc.nextLine();
-                continue;
-            }
 
             System.out.println();
 
@@ -155,18 +112,14 @@ public class Kiosk {
     }
 
     //사용자 유형 설정
-    public void setCustomer(Customer customer){
-        for(Customer option : Customer.values()){
-            if(option.equals(customer)){
-                System.out.printf("고객님의 할인 유형이 %s로 전환됩니다.\n",option.getOption());
-                this.customer = option;
-            }
-        }
+    private void setCustomer(Customer customer) {
+        System.out.printf("고객님의 할인 유형이 %s로 전환됩니다.\n", customer.getOption());
+        this.customer = customer;
     }
 
     //출력 부
     //MainMenu 출력
-    public void displayMainMenu() {
+    private void displayMainMenu() {
         System.out.println("[ Main Menu ]");
         for (int i = 0; i < categoryMenu.size(); i++) {
             System.out.println((i + 1) + "." + categoryMenu.get(i).getCategory());
@@ -178,6 +131,82 @@ public class Kiosk {
             System.out.println("[ ORDER MENU ]");
             System.out.println((categoryMenu.size() + 1) + ".Orders | 장바구니를 확인후 주문합니다.");
             System.out.println((categoryMenu.size() + 2) + ".Cancel | 진행중인 주문을 취소합니다.");
+        }
+    }
+
+    private void displayCartMenu() {
+        System.out.println("아래와 같이 주문하시겠습니까?");
+        System.out.println("[ Orders ]");
+        int cnt = 1;
+
+        /* 장바구니 물품 출력 */
+        for (MenuItem key : cart.getSelectedItems().keySet()) {
+            System.out.printf("%2d. %10s | W %-5.1f | %d개 | %s\n", cnt++, key.getName(), key.getPrice(), cart.getSelectedItems().get(key), key.getInformation());
+            totalPrice += cart.getSelectedItems().get(key)*key.getPrice();
+        }
+        System.out.println();
+        System.out.println("[ Total ]");
+        System.out.printf("할인 적용 전 | W %3.1f\n", totalPrice);
+        System.out.printf("할인 적용 후 | W %3.1f\n", totalPrice * customer.getDiscount());
+        System.out.println("1. 주문\t2. 할인혜택보기\t3.메뉴판으로 돌아가기 ");
+    }
+    private void orderMenu(){
+        if(!this.customer.equals(Customer.NORMAL)){
+            System.out.println(this.customer.getOption()+"("+(int)((1.0-this.customer.getDiscount())*100.0)+"%)의 할인율이 제공되었습니다.");
+        }
+        System.out.printf("주문이 완료되었습니다. 총 결제 금액은 W %3.1f 입니다.\n", this.totalPrice*customer.getDiscount());
+        this.totalPrice = 0.0;
+        cart.clearItem();
+    }
+
+    //사용자 유형 출력
+    private void displayCustomerOption(){
+        System.out.println("============================");
+        int i = 1;
+        for(Customer option : Customer.values()){
+            System.out.println(i + ". " + option.getOption());
+            i++;
+        }
+    }
+    
+    //사용자 유형 변경
+    private void selectCustomerOption(int customerOption){
+        for(Customer option : Customer.values()){
+            if(option.ordinal() == customerOption-1){
+                setCustomer(option);
+            }
+        }
+    }
+
+    //선택한 카테고리 메뉴 출력
+    private void displayCategoryMenu(int selectCategory){
+        System.out.println("=====" + categoryMenu.get(selectCategory - 1).getCategory() + "=====");
+        for (Menu menu : categoryMenu) {
+            /* 선택한 카테고리 출력 */
+            if (menu.getCategory().equals(categoryMenu.get(selectCategory - 1).getCategory())) {
+                menu.printMenuItems();
+            }
+        }
+        System.out.println("0. 뒤로가기");
+    }
+
+    //
+    private void addCartItem(int selectCategory,int selectMerchandise){
+        cart.add(categoryMenu.get(selectCategory - 1).getMenuItems().get(selectMerchandise - 1));
+        System.out.println(categoryMenu.get(selectCategory - 1).getMenuItems().get(selectMerchandise - 1).getName()+" 이 장바구니에 추가되었습니다.");
+    }
+    //사용자 입력 예외처리
+    private int getUserInput(String message, int min, int max) {
+        while (true) {
+            try {
+                System.out.print(message);
+                int input = sc.nextInt();
+                if (input < min || input > max) throw new InputMismatchException();
+                return input;
+            } catch (InputMismatchException e) {
+                System.out.println("올바른 숫자를 입력하세요.");
+                sc.nextLine();
+            }
         }
     }
 }
