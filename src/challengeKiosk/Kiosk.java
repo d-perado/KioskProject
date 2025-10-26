@@ -4,7 +4,7 @@ import java.util.*;
 import java.util.stream.IntStream;
 
 public class Kiosk {
-    //속성
+    // 속성
     private List<Menu> categoryMenu;
     private boolean isKiosk = true;
     private Scanner sc = new Scanner(System.in);
@@ -13,7 +13,7 @@ public class Kiosk {
     private double totalPrice = 0.0;
     private final int EXIT = 0;
 
-    //생성자
+    // 생성자
     public Kiosk(Menu categoryMenu) {
         this.categoryMenu = new ArrayList<>();
         this.categoryMenu.add(categoryMenu);
@@ -22,7 +22,8 @@ public class Kiosk {
         this.categoryMenu = new ArrayList<>();
     }
 
-    //기능
+    // 기능
+    //키오스크 시작
     public void start() {
         int selectCategory = -1;
 
@@ -94,23 +95,8 @@ public class Kiosk {
         }
     }
 
-    //키오스크 종료
-    private void exit() {
-        isKiosk = false;
-    }
 
-    //키오스크 카테고리메뉴 추가
-    public void addCategory(Menu menu) {
-        this.categoryMenu.add(menu);
-    }
-
-    //할인 혜택 설정
-    private void setCustomer(Customer customer) {
-        System.out.printf("고객님의 할인 유형이 %s로 전환됩니다.\n", customer.getOption());
-        this.customer = customer;
-    }
-
-    //출력 부
+    //출력 메서드 집합
     //MainMenu 출력
     private void displayMainMenu() {
         System.out.println("[ Main Menu ]");
@@ -161,15 +147,6 @@ public class Kiosk {
         IntStream.range(0, Customer.values().length)
                 .forEach(i -> System.out.println((i + 1) + ". " + Customer.values()[i].getOption()));
     }
-    
-    //할인 혜택 변경
-    private void selectCustomerOption(int customerOption){
-        Arrays.stream(Customer.values())
-                .filter(option -> option.ordinal() == customerOption - 1)
-                .findFirst()
-                .ifPresent(this::setCustomer);
-    }
-
     //선택한 카테고리 메뉴 출력
     private void displayCategoryMenu(int selectCategory){
         System.out.println("=====" + categoryMenu.get(selectCategory - 1).getCategory() + "=====");
@@ -181,6 +158,39 @@ public class Kiosk {
         }
         System.out.println("0. 뒤로가기");
     }
+    //주문 취소 출력
+    private void displayCartCancel(){
+        System.out.println("주문이 취소되었습니다.");
+        cart.clearItem();
+    }
+
+
+    //기능이 있는 메서드 집합
+    //키오스크 종료
+    private void exit() {
+        isKiosk = false;
+    }
+
+    //키오스크 카테고리메뉴 추가
+    public void addCategory(Menu menu) {
+        this.categoryMenu.add(menu);
+    }
+
+    //할인 혜택 변경
+    private void selectCustomerOption(int customerOption){
+        Arrays.stream(Customer.values())
+                .filter(option -> option.ordinal() == customerOption - 1)
+                .findFirst()
+                .ifPresent(this::setCustomer);
+    }
+
+    //할인 혜택 설정
+    private void setCustomer(Customer customer) {
+        System.out.printf("고객님의 할인 유형이 %s로 전환됩니다.\n", customer.getOption());
+        this.customer = customer;
+    }
+
+
 
     //장바구니에 상품 담기
     private void addCartItem(int selectCategory,int selectMerchandise){
@@ -188,11 +198,8 @@ public class Kiosk {
         System.out.println(categoryMenu.get(selectCategory - 1).getMenuItems().get(selectMerchandise - 1).getName()+" 이 장바구니에 추가되었습니다.");
     }
 
-    private void displayCartCancel(){
-        System.out.println("주문이 취소되었습니다.");
-        cart.clearItem();
-    }
-    
+
+    //입력부
     //사용자 입력 예외처리
     private int getUserInput(String message, int min, int max) {
         while (true) {
