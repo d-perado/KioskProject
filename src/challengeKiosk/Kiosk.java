@@ -33,9 +33,9 @@ public class Kiosk {
 
                 /* Cart에 상품이 담겨있는지에 따라 출력 변화 */
                 if (cart.getSelectedItems().isEmpty()) {
-                    selectCategory = getUserInput("카테고리를 선택해주세요. :",0,categoryMenu.size());
+                    selectCategory = getUserInput("카테고리를 선택해주세요. : ",0,categoryMenu.size());
                 } else {
-                    selectCategory = getUserInput("카테고리를 선택해주세요.:" ,0,categoryMenu.size()+2);
+                    selectCategory = getUserInput("카테고리를 선택해주세요. : " ,0,categoryMenu.size()+2);
                 }
 
                 if (selectCategory == EXIT) {
@@ -55,7 +55,7 @@ public class Kiosk {
                         /* 할인 혜택 변경 */
                         displayCustomerOption();
 
-                        int customerOption = getUserInput("할인혜택을 선택하세요.",1,Customer.values().length);
+                        int customerOption = getUserInput("할인혜택을 선택하세요. : ",1,Customer.values().length);
 
                         selectCustomerOption(customerOption);
                         continue;
@@ -75,7 +75,7 @@ public class Kiosk {
                 }
 
                 /* 상품 선택하기 */
-                int selectMerchandise = getUserInput("상품을 선택해주세요. :",0,categoryMenu.get(selectCategory - 1).getMenuItems().size());
+                int selectMerchandise = getUserInput("상품을 선택해주세요. : ",0,categoryMenu.get(selectCategory - 1).getMenuItems().size());
 
                 if (selectMerchandise == 0) {
                     continue;
@@ -84,7 +84,7 @@ public class Kiosk {
                 System.out.println("======================================");
                 System.out.println(categoryMenu.get(selectCategory - 1).getMenuItems().get(selectMerchandise - 1).toString());
 
-                int choiceAddItem = getUserInput("위의 메뉴를 장바구니에 추가하시겠습니까? 1.예 2.아니오",1,2);
+                int choiceAddItem = getUserInput("위의 메뉴를 장바구니에 추가하시겠습니까? 1.예 2.아니오 : ",1,2);
 
                 if (choiceAddItem == 1) {
                     /* 장바구니 물품 추가 확정 */
