@@ -198,10 +198,9 @@ public class Kiosk {
         cart.add(categoryMenu.get(selectCategory - 1).getMenuItems().get(selectMerchandise - 1));
         System.out.println(categoryMenu.get(selectCategory - 1).getMenuItems().get(selectMerchandise - 1).getName()+" 이 장바구니에 추가되었습니다.");
     }
-
-
-    //입력부
-    //사용자 입력 예외처리
+    
+    //입력 메서드
+    //사용자 int값 입력
     private int getUserInput(String message, int min, int max) {
         while (true) {
             try {

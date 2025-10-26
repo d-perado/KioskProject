@@ -11,13 +11,10 @@ public class Cart {
 
 
     //기능
-    //게터
     //선택한 물품 반환
     public HashMap<MenuItem,Integer> getSelectedItems() {
         return new HashMap<>(this.selectedItems);
     }
-
-    //세터
 
     // 상품 갯수하나 추가
     public void add(MenuItem menuItem) {
