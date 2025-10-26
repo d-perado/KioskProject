@@ -32,9 +32,6 @@ public class Kiosk {
             /* 메인 메뉴 출력 */
                 displayMainMenu();
 
-                //사용자 입력
-
-
                 /* Cart에 상품이 담겨있는지에 따라 출력 변화 */
                 if (cart.getSelectedItems().isEmpty()) {
                     selectCategory = getUserInput("카테고리를 선택해주세요. :",0,categoryMenu.size());
@@ -49,11 +46,11 @@ public class Kiosk {
                     /* 장바구니 물품 주문하기 */
                     displayCartMenu();
 
-                    int orderOption = getUserInput("선택하세요. : ",1,2);
+                    int orderOption = getUserInput("1. 주문\t2. 할인혜택보기\t3.메뉴판으로 돌아가기 : ",1,3);
 
                     if (orderOption == 1) {
-                        /* 사용자 유형에 따른 총액 계산 */
-                        orderMenu();
+                        /* 주문 확정 출력 */
+                        displayOrderComplete();
                         continue;
                     } else if (orderOption==2){
                         /* 사용자 유형 변경 */
@@ -66,13 +63,11 @@ public class Kiosk {
                     }
 
                 } else if (selectCategory == categoryMenu.size() + 2) {
-
-                    //사용자 입력
+                    /* 주문 취소 선택*/
                     int cancelOrder = getUserInput("주문을 취소하시겠습니까? 1.취소 2.아니오 : ",1,2);
 
                     if ( cancelOrder == 1 ){
-                        System.out.println("주문이 취소되었습니다.");
-                        cart.clearItem();
+                        displayCartCancel();
                         continue;
                     }
                 } else {
@@ -93,16 +88,16 @@ public class Kiosk {
                 int choiceAddItem = getUserInput("위의 메뉴를 장바구니에 추가하시겠습니까? 1.예 2.아니오",1,2);
 
                 if (choiceAddItem == 1) {
+                    /* 카트 물품 추가 확정 */
                     addCartItem(selectCategory,selectMerchandise);
                 }
 
             System.out.println();
-
         }
     }
 
     //키오스크 종료
-    public void exit() {
+    private void exit() {
         isKiosk = false;
     }
 
@@ -134,6 +129,7 @@ public class Kiosk {
         }
     }
 
+    //카트 메뉴 출력
     private void displayCartMenu() {
         System.out.println("아래와 같이 주문하시겠습니까?");
         System.out.println("[ Orders ]");
@@ -148,9 +144,11 @@ public class Kiosk {
         System.out.println("[ Total ]");
         System.out.printf("할인 적용 전 | W %3.1f\n", totalPrice);
         System.out.printf("할인 적용 후 | W %3.1f\n", totalPrice * customer.getDiscount());
-        System.out.println("1. 주문\t2. 할인혜택보기\t3.메뉴판으로 돌아가기 ");
+
     }
-    private void orderMenu(){
+
+    //주문 확정 출력
+    private void displayOrderComplete(){
         if(!this.customer.equals(Customer.NORMAL)){
             System.out.println(this.customer.getOption()+"("+(int)((1.0-this.customer.getDiscount())*100.0)+"%)의 할인율이 제공되었습니다.");
         }
@@ -194,6 +192,11 @@ public class Kiosk {
     private void addCartItem(int selectCategory,int selectMerchandise){
         cart.add(categoryMenu.get(selectCategory - 1).getMenuItems().get(selectMerchandise - 1));
         System.out.println(categoryMenu.get(selectCategory - 1).getMenuItems().get(selectMerchandise - 1).getName()+" 이 장바구니에 추가되었습니다.");
+    }
+
+    private void displayCartCancel(){
+        System.out.println("주문이 취소되었습니다.");
+        cart.clearItem();
     }
     //사용자 입력 예외처리
     private int getUserInput(String message, int min, int max) {
