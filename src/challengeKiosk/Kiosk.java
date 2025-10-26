@@ -28,7 +28,7 @@ public class Kiosk {
         int selectCategory = -1;
 
         while (this.isKiosk) {
-            /* 메인 메뉴 출력 */
+                /* 메인 메뉴 출력 */
                 displayMainMenu();
 
                 /* Cart에 상품이 담겨있는지에 따라 출력 변화 */
@@ -81,7 +81,7 @@ public class Kiosk {
                     continue;
                 }
 
-                System.out.println("======================================");
+                System.out.println("======================================\n");
                 System.out.println(categoryMenu.get(selectCategory - 1).getMenuItems().get(selectMerchandise - 1).toString());
 
                 int choiceAddItem = getUserInput("위의 메뉴를 장바구니에 추가하시겠습니까? 1.예 2.아니오 : ",1,2);
@@ -118,7 +118,6 @@ public class Kiosk {
         System.out.println("아래와 같이 주문하시겠습니까?");
         System.out.println("[ Orders ]");
         int cnt = 1;
-        double totalPrice = cart.getTotalPrice();
 
         /* 장바구니 물품 출력 */
         for (MenuItem key : cart.getSelectedItems().keySet()) {
@@ -126,8 +125,8 @@ public class Kiosk {
         }
         System.out.println();
         System.out.println("[ Total ]");
-        System.out.printf("할인 적용 전 | W %3.1f\n", totalPrice);
-        System.out.printf("할인 적용 후 | W %3.1f\n", totalPrice * customer.getDiscount());
+        System.out.printf("할인 적용 전 | W %3.1f\n", cart.getTotalPrice());
+        System.out.printf("할인 적용 후 | W %3.1f\n", cart.getTotalPriceAfterDiscount(customer.getDiscount()));
 
     }
 
@@ -136,7 +135,7 @@ public class Kiosk {
         if(!this.customer.equals(Customer.NORMAL)){
             System.out.println(this.customer.getOption()+"("+(int)((1.0-this.customer.getDiscount())*100.0)+"%)의 할인율이 제공되었습니다.");
         }
-        System.out.printf("주문이 완료되었습니다. 총 결제 금액은 W %3.1f 입니다.\n", cart.getTotalPrice()*customer.getDiscount());
+        System.out.printf("주문이 완료되었습니다. 총 결제 금액은 W %3.1f 입니다.\n", cart.getTotalPriceAfterDiscount(customer.getDiscount()));
         cart.clearItem();
     }
 

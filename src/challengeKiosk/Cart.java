@@ -45,12 +45,16 @@ public class Cart {
         }
     }
     //장바구니 총액 계산
-    public double getTotalPrice(){
+    public double getTotalPrice() {
         double totalPrice = 0.0;
         for (MenuItem key : selectedItems.keySet()){
             totalPrice += selectedItems.get(key)*key.getPrice();
         }
         return totalPrice;
+    }
+
+    public double getTotalPriceAfterDiscount(double discount) {
+        return getTotalPrice()*discount;
     }
 
     //장바구니 비우기
