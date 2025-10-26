@@ -118,7 +118,7 @@ public class Kiosk {
         System.out.println("아래와 같이 주문하시겠습니까?");
         System.out.println("[ Orders ]");
         int cnt = 1;
-        double totalPrice = cart.calculateTotalPrice();
+        double totalPrice = cart.getTotalPrice();
 
         /* 장바구니 물품 출력 */
         for (MenuItem key : cart.getSelectedItems().keySet()) {
@@ -136,7 +136,7 @@ public class Kiosk {
         if(!this.customer.equals(Customer.NORMAL)){
             System.out.println(this.customer.getOption()+"("+(int)((1.0-this.customer.getDiscount())*100.0)+"%)의 할인율이 제공되었습니다.");
         }
-        System.out.printf("주문이 완료되었습니다. 총 결제 금액은 W %3.1f 입니다.\n", cart.calculateTotalPrice()*customer.getDiscount());
+        System.out.printf("주문이 완료되었습니다. 총 결제 금액은 W %3.1f 입니다.\n", cart.getTotalPrice()*customer.getDiscount());
         cart.clearItem();
     }
 
@@ -149,14 +149,10 @@ public class Kiosk {
     //선택한 카테고리 메뉴 출력
     private void displayCategoryMenu(int selectCategory){
         System.out.println("=====" + categoryMenu.get(selectCategory - 1).getCategory() + "=====");
-        for (Menu menu : categoryMenu) {
-            /* 선택한 카테고리 출력 */
-            if (menu.getCategory().equals(categoryMenu.get(selectCategory - 1).getCategory())) {
-                menu.printMenuItems();
-            }
-        }
+        categoryMenu.get(selectCategory-1).printMenuItems();
         System.out.println("0. 뒤로가기");
     }
+
     //주문 취소 출력
     private void displayCartCancel(){
         System.out.println("주문이 취소되었습니다.");
