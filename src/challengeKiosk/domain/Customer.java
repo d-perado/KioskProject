@@ -1,4 +1,4 @@
-package challengeKiosk;
+package challengeKiosk.domain;
 
 public enum Customer {
     NORMAL("일반인",1),

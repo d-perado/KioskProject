@@ -1,5 +1,10 @@
 package challengeKiosk;
 
+import challengeKiosk.domain.Customer;
+import challengeKiosk.domain.Menu;
+import challengeKiosk.domain.MenuItem;
+import challengeKiosk.service.Cart;
+
 import java.util.*;
 import java.util.stream.IntStream;
 

@@ -1,4 +1,4 @@
-package challengeKiosk;
+package challengeKiosk.domain;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,7 +15,7 @@ public class Menu {
     }
 
     //기능
-    //카테고리 출력
+    //게터
     public String getCategory() {
         return this.category;
     }

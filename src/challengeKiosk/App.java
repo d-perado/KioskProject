@@ -1,5 +1,8 @@
 package challengeKiosk;
 
+import challengeKiosk.domain.Menu;
+import challengeKiosk.domain.MenuItem;
+
 public class App {
 
 

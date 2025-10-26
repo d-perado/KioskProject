@@ -1,4 +1,6 @@
-package challengeKiosk;
+package challengeKiosk.service;
+
+import challengeKiosk.domain.MenuItem;
 
 import java.util.HashMap;
 import java.util.Map;
