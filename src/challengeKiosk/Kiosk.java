@@ -5,13 +5,14 @@ import java.util.stream.IntStream;
 
 public class Kiosk {
     // 속성
-    private List<Menu> categoryMenu;
     private boolean isKiosk = true;
-    private Scanner sc = new Scanner(System.in);
-    private Cart cart = new Cart();
     private Customer customer = Customer.NORMAL;
     private double totalPrice = 0.0;
     private final int EXIT = 0;
+
+    private List<Menu> categoryMenu;
+    private Scanner sc = new Scanner(System.in);
+    private Cart cart = new Cart();
 
     // 생성자
     public Kiosk(Menu categoryMenu) {
