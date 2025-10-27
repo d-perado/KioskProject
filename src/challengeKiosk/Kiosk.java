@@ -73,7 +73,9 @@ public class Kiosk {
                         continue;
                     } else if (deleteItemOption == 0 ) {
                         continue;
-                    } else if (deleteItemOption > 0 && deleteItemOption <= cart.getSelectedItems().size()) {
+
+                    } else {
+                        /* 물품 한개 취소 */
                         cart.removeItem(deleteItemOption-1);
                         System.out.println("선택하신 물품이 1개 제거되었습니다.");
                         continue;
@@ -140,6 +142,7 @@ public class Kiosk {
         for (MenuItem key : cart.getSelectedItems().keySet()) {
             System.out.printf("%2d. %10s | W %-5.1f | %d개 | %s\n", cnt++, key.getName(), key.getPrice(), cart.getSelectedItems().get(key), key.getInformation());
         }
+
         System.out.println();
         System.out.println("[ Total ]");
         System.out.printf("할인 적용 전 | W %3.1f\n", cart.getTotalPrice());
@@ -152,6 +155,7 @@ public class Kiosk {
         if(!this.customer.equals(Customer.NORMAL)){
             System.out.println(this.customer.getOption()+"("+(int)((1.0-this.customer.getDiscount())*100.0)+"%)의 할인율이 제공되었습니다.");
         }
+
         System.out.printf("주문이 완료되었습니다. 총 결제 금액은 W %3.1f 입니다.\n", cart.getTotalPriceAfterDiscount(customer.getDiscount()));
         cart.clearItem();
     }
