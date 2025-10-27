@@ -1,14 +1,14 @@
 package challengeKiosk;
 
 import challengeKiosk.domain.Customer;
+import challengeKiosk.domain.Item;
 import challengeKiosk.domain.Menu;
-import challengeKiosk.domain.MenuItem;
 import challengeKiosk.service.Cart;
 
 import java.util.*;
 import java.util.stream.IntStream;
 
-public class Kiosk {
+public class Kiosk <T extends Item> {
     // 속성
     private Customer customer = Customer.NORMAL;
     private final int EXIT = 0;
@@ -137,12 +137,13 @@ public class Kiosk {
     private void displayCartMenu() {
         System.out.println("[ Orders ]");
         int cnt = 1;
-
+        Map<T, Integer> items = cart.getSelectedItems();
         /* 장바구니 물품 출력 */
-        for (MenuItem key : cart.getSelectedItems().keySet()) {
-            System.out.printf("%2d. %10s | W %-5.1f | %d개 | %s\n", cnt++, key.getName(), key.getPrice(), cart.getSelectedItems().get(key), key.getInformation());
+        for (T key : items.keySet()) {
+            System.out.printf("%2d. %10s | W %-5.1f | %d개 | %s\n",
+                    cnt++, key.getName(), key.getPrice(),
+                    items.get(key), key.getInformation());
         }
-
         System.out.println();
         System.out.println("[ Total ]");
         System.out.printf("할인 적용 전 | W %3.1f\n", cart.getTotalPrice());
@@ -205,8 +206,8 @@ public class Kiosk {
 
     //장바구니에 상품 담기
     private void addCartItem(int selectCategory,int selectMerchandise){
-        cart.add(categoryMenu.get(selectCategory - 1).getMenuItems().get(selectMerchandise - 1));
-        System.out.println(categoryMenu.get(selectCategory - 1).getMenuItems().get(selectMerchandise - 1).getName()+" 이 장바구니에 추가되었습니다.");
+        cart.add((Item) categoryMenu.get(selectCategory - 1).getMenuItems().get(selectMerchandise - 1));
+        System.out.println(((Item) categoryMenu.get(selectCategory - 1).getMenuItems().get(selectMerchandise - 1)).getName()+" 이 장바구니에 추가되었습니다.");
     }
     
     //입력 메서드
