@@ -2,12 +2,12 @@ package challengeKiosk.service;
 
 import challengeKiosk.domain.MenuItem;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
+import java.util.stream.Collectors;
 
 public class Cart {
     //속성
-    private Map<MenuItem,Integer> selectedItems = new HashMap<>();
+    private Map<MenuItem,Integer> selectedItems = new LinkedHashMap<>();
 
     //생성자
 
@@ -15,42 +15,53 @@ public class Cart {
     //기능
     //선택한 물품 반환
     public HashMap<MenuItem,Integer> getSelectedItems() {
-        return new HashMap<>(this.selectedItems);
+        return new LinkedHashMap<>(this.selectedItems);
+    }
+
+    public List<MenuItem> getItemsToList(){
+        return selectedItems.entrySet().stream().map(Map.Entry::getKey).collect(Collectors.toList());
     }
 
     // 상품 갯수하나 추가
     public void add(MenuItem menuItem) {
-        if (!selectedItems.containsKey(menuItem)) {
-            selectedItems.put(menuItem, 1);
+        if (!this.selectedItems.containsKey(menuItem)) {
+            this.selectedItems.put(menuItem, 1);
         } else {
-            selectedItems.put(menuItem, selectedItems.get(menuItem) + 1);
+            this.selectedItems.put(menuItem, this.selectedItems.get(menuItem) + 1);
         }
     }
 
     // 상품 i개 추가
     public void add(MenuItem menuItem, int i) {
-        if (!selectedItems.containsKey(menuItem)) {
-            selectedItems.put(menuItem, i);
+        if (!this.selectedItems.containsKey(menuItem)) {
+            this.selectedItems.put(menuItem, i);
         } else {
-            selectedItems.put(menuItem, selectedItems.get(menuItem) + i);
+            this.selectedItems.put(menuItem, this.selectedItems.get(menuItem) + i);
         }
     }
 
-    //하나의 물품 삭제
-    public void removeItem(MenuItem menuItem) {
-        if (selectedItems.containsKey(menuItem)) {
-            if (selectedItems.get(menuItem) < 2) {
-                selectedItems.remove(menuItem);
-            } else {
-                selectedItems.put(menuItem,selectedItems.get(menuItem) - 1);
-            }
-        }
+    //물품 갯수 1개 줄이기
+    public void removeItem(int i) {
+        ArrayList<MenuItem> list = new ArrayList<>(getItemsToList());
+        MenuItem target = list.get(i);
+
+        selectedItems.entrySet().stream()
+                .filter(entry -> entry.getKey().equals(target))
+                .findFirst()
+                .ifPresent(entry -> {
+                    int newCount = entry.getValue() - 1;
+                    if (newCount == 0) {
+                        selectedItems.remove(entry.getKey());
+                    } else {
+                        selectedItems.replace(entry.getKey(), newCount);
+                    }
+                });
     }
     //장바구니 총액 계산
     public double getTotalPrice() {
         double totalPrice = 0.0;
-        for (MenuItem key : selectedItems.keySet()){
-            totalPrice += selectedItems.get(key)*key.getPrice();
+        for (MenuItem key : this.selectedItems.keySet()){
+            totalPrice += this.selectedItems.get(key)*key.getPrice();
         }
         return totalPrice;
     }
@@ -61,7 +72,7 @@ public class Cart {
 
     //장바구니 비우기
     public void clearItem(){
-            selectedItems.clear();
+            this.selectedItems.clear();
     }
 
 }

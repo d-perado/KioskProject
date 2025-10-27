@@ -10,7 +10,6 @@ import java.util.stream.IntStream;
 
 public class Kiosk {
     // 속성
-    private boolean isKiosk = true;
     private Customer customer = Customer.NORMAL;
     private final int EXIT = 0;
 
@@ -31,8 +30,8 @@ public class Kiosk {
     //키오스크 시작
     public void start() {
         int selectCategory = -1;
-
-        while (this.isKiosk) {
+        boolean isKiosk = true;
+        while (isKiosk) {
                 /* 메인 메뉴 출력 */
                 displayMainMenu();
 
@@ -44,19 +43,27 @@ public class Kiosk {
                 }
 
                 if (selectCategory == EXIT) {
-                    exit();
+                    isKiosk = false;
                     continue;
                 } else if (selectCategory == categoryMenu.size() + 1) {
                     /* 장바구니 물품 주문하기 */
+                    System.out.println("아래와 같이 주문하시겠습니까?");
+
                     displayCartMenu();
 
-                    int orderOption = getUserInput("1. 주문\t2. 할인혜택보기\t3.메뉴판으로 돌아가기 : ",1,3);
+                    System.out.printf("%d. 주문\n",cart.getSelectedItems().size()+1);
+                    System.out.printf("%d. 할인혜택보기\n",cart.getSelectedItems().size()+2);
+                    System.out.printf("0. 메뉴판으로 돌아가기\n");
 
-                    if (orderOption == 1) {
+                    System.out.println("============================");
+                    int deleteItemOption = getUserInput("취소할 상품을 선택해주세요. : ",0
+                            ,cart.getSelectedItems().size() + 2);
+
+                    if (deleteItemOption == cart.getSelectedItems().size() + 1) {
                         /* 주문 확정 출력 */
                         displayOrderComplete();
                         continue;
-                    } else if (orderOption==2){
+                    } else if (deleteItemOption==cart.getSelectedItems().size() + 2){
                         /* 할인 혜택 변경 */
                         displayCustomerOption();
 
@@ -64,11 +71,17 @@ public class Kiosk {
 
                         selectCustomerOption(customerOption);
                         continue;
+                    } else if (deleteItemOption == 0 ) {
+                        continue;
+                    } else if (deleteItemOption > 0 && deleteItemOption <= cart.getSelectedItems().size()) {
+                        cart.removeItem(deleteItemOption-1);
+                        System.out.println("선택하신 물품이 1개 제거되었습니다.");
+                        continue;
                     }
 
                 } else if (selectCategory == categoryMenu.size() + 2) {
-                    /* 주문 취소 선택*/
-                    int cancelOrder = getUserInput("주문을 취소하시겠습니까? 1.취소 2.아니오 : ",1,2);
+                    /* 주문 취소 선택 */
+                    int cancelOrder = getUserInput("주문을 전체 취소하시겠습니까? 1.취소 2.아니오 : ",1,2);
 
                     if ( cancelOrder == 1 ){
                         displayCartCancel();
@@ -80,7 +93,7 @@ public class Kiosk {
                 }
 
                 /* 상품 선택하기 */
-                int selectMerchandise = getUserInput("상품을 선택해주세요. : ",0,categoryMenu.get(selectCategory - 1).getMenuItems().size());
+                int selectMerchandise = getUserInput("상품을 선택해주세요. : ",0, categoryMenu.get(selectCategory - 1).getMenuItems().size());
 
                 if (selectMerchandise == 0) {
                     continue;
@@ -120,7 +133,6 @@ public class Kiosk {
 
     //장바구니 메뉴 출력
     private void displayCartMenu() {
-        System.out.println("아래와 같이 주문하시겠습니까?");
         System.out.println("[ Orders ]");
         int cnt = 1;
 
@@ -150,6 +162,7 @@ public class Kiosk {
         IntStream.range(0, Customer.values().length)
                 .forEach(i -> System.out.println((i + 1) + ". " + Customer.values()[i].getOption()));
     }
+
     //선택한 카테고리 메뉴 출력
     private void displayCategoryMenu(int selectCategory){
         System.out.println("=====" + categoryMenu.get(selectCategory - 1).getCategory() + "=====");
@@ -165,11 +178,6 @@ public class Kiosk {
 
 
     //기능이 있는 메서드 집합
-    //키오스크 종료
-    private void exit() {
-        isKiosk = false;
-    }
-
     //키오스크 카테고리메뉴 추가
     public void addCategory(Menu menu) {
         this.categoryMenu.add(menu);
