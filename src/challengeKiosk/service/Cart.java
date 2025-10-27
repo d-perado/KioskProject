@@ -16,10 +16,10 @@ public class Cart <T extends Item> {
     //기능
     //선택한 물품 반환
     public Map<T, Integer> getSelectedItems() {
-        return new LinkedHashMap<>(this.selectedItems);
+        return this.selectedItems; //깊은복사 얕은복사 차이 생각하면서 봐보기.
     }
 
-    public List<T> getItemsToList(){
+    public List<T> getItemsToList() {
         return selectedItems.entrySet().stream().map(Map.Entry::getKey).collect(Collectors.toList());
     }
 

@@ -1,17 +1,16 @@
-package challengeKiosk;
+package challengeKiosk.service;
 
 import challengeKiosk.domain.Customer;
 import challengeKiosk.domain.Item;
 import challengeKiosk.domain.Menu;
-import challengeKiosk.service.Cart;
 
 import java.util.*;
 import java.util.stream.IntStream;
 
-public class Kiosk <T extends Item> {
+public class Kiosk { //제네릭을 클래스에 쓴 이유가 명확해보이진 않음
     // 속성
     private Customer customer = Customer.NORMAL;
-    private final int EXIT = 0;
+    private static final int EXIT = 0; // 상수값은 static 필드에
 
     private List<Menu> categoryMenu;
     private Scanner sc = new Scanner(System.in);
@@ -21,9 +20,6 @@ public class Kiosk <T extends Item> {
     public Kiosk(Menu categoryMenu) {
         this.categoryMenu = new ArrayList<>();
         this.categoryMenu.add(categoryMenu);
-    }
-    public Kiosk() {
-        this.categoryMenu = new ArrayList<>();
     }
 
     // 기능
@@ -40,7 +36,7 @@ public class Kiosk <T extends Item> {
                     selectCategory = getUserInput("카테고리를 선택해주세요. : ",0,categoryMenu.size());
                 } else {
                     selectCategory = getUserInput("카테고리를 선택해주세요. : " ,0,categoryMenu.size()+2);
-                }
+                } //다른쪽으로 빼보는게 어떨까
 
                 if (selectCategory == EXIT) {
                     isKiosk = false;
@@ -135,7 +131,7 @@ public class Kiosk <T extends Item> {
     }
 
     //장바구니 메뉴 출력
-    private void displayCartMenu() {
+    private <T extends Item> void displayCartMenu() {
         System.out.println("[ Orders ]");
         int cnt = 1;
         Map<T, Integer> items = cart.getSelectedItems();
@@ -157,7 +153,6 @@ public class Kiosk <T extends Item> {
         if(!this.customer.equals(Customer.NORMAL)){
             System.out.println(this.customer.getOption()+"("+(int)((1.0-this.customer.getDiscount())*100.0)+"%)의 할인율이 제공되었습니다.");
         }
-
         System.out.printf("주문이 완료되었습니다. 총 결제 금액은 W %3.1f 입니다.\n", cart.getTotalPriceAfterDiscount(customer.getDiscount()));
         cart.clearItem();
     }

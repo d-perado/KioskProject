@@ -4,6 +4,7 @@ import challengeKiosk.domain.BuggerItem;
 import challengeKiosk.domain.DessertItem;
 import challengeKiosk.domain.DrinkItem;
 import challengeKiosk.domain.Menu;
+import challengeKiosk.service.Kiosk;
 
 public class App {
 
