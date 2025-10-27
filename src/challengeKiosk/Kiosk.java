@@ -108,7 +108,8 @@ public class Kiosk <T extends Item> {
 
                 if (choiceAddItem == 1) {
                     /* 장바구니 물품 추가 확정 */
-                    addCartItem(selectCategory,selectMerchandise);
+                    cart.add((Item) categoryMenu.get(selectCategory - 1).getMenuItems().get(selectMerchandise - 1));
+                    System.out.println(((Item) categoryMenu.get(selectCategory - 1).getMenuItems().get(selectMerchandise - 1)).getName()+" 이 장바구니에 추가되었습니다.");
                 }
 
             System.out.println();
@@ -200,14 +201,6 @@ public class Kiosk <T extends Item> {
     private void setCustomer(Customer customer) {
         System.out.printf("고객님의 할인 유형이 %s로 전환됩니다.\n", customer.getOption());
         this.customer = customer;
-    }
-
-
-
-    //장바구니에 상품 담기
-    private void addCartItem(int selectCategory,int selectMerchandise){
-        cart.add((Item) categoryMenu.get(selectCategory - 1).getMenuItems().get(selectMerchandise - 1));
-        System.out.println(((Item) categoryMenu.get(selectCategory - 1).getMenuItems().get(selectMerchandise - 1)).getName()+" 이 장바구니에 추가되었습니다.");
     }
     
     //입력 메서드

@@ -50,11 +50,11 @@ public class Cart <T extends Item> {
                 .filter(entry -> entry.getKey().equals(target))
                 .findFirst()
                 .ifPresent(entry -> {
-                    int newCount = entry.getValue() - 1;
-                    if (newCount == 0) {
+                    int amount = entry.getValue() - 1;
+                    if (amount == 0) {
                         selectedItems.remove(entry.getKey());
                     } else {
-                        selectedItems.replace(entry.getKey(), newCount);
+                        selectedItems.replace(entry.getKey(), amount - 1);
                     }
                 });
     }
