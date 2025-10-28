@@ -3,11 +3,11 @@ package challengeKiosk.domain;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Menu <T extends Item> {
+public class Menu <T extends FoodItem> {
 
     //속성
-    private String category;
-    private List<T> menuItems = new ArrayList<>();
+    private final String category;
+    private final List<T> menuItems = new ArrayList<>();
 
     //생성자
     public Menu(String category) {
@@ -29,6 +29,11 @@ public class Menu <T extends Item> {
                     , menuItem.getInformation());
         }
     }
+    //메뉴아이템 하나 반환
+    public T getMenuItem(int i){
+        return menuItems.get(i);
+    }
+
 
     //메뉴아이템 전체리스트 반환 함수
     public List<T> getMenuItems() {

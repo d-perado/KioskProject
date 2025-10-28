@@ -6,8 +6,8 @@ public enum Customer {
     STUDENT("학생",0.8),
     NATIONAL_MERIT("국가유공자",0.5);
 
-    private String option;
-    private double discount;
+    private final String option;
+    private final double discount;
 
     Customer(String option, double discount){
         this.option = option;
