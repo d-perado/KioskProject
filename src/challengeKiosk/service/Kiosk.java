@@ -5,10 +5,10 @@ import challengeKiosk.view.Display;
 
 import java.util.*;
 
-public class Kiosk<T extends FoodItem> { //#제네릭을 클래스에 쓴 이유가 명확해보이진 않음
+public class Kiosk {
     // 속성
     private Customer customer = Customer.NORMAL;
-    private static final int EXIT = 0; //# 상수값은 static 필드에
+    private static final int EXIT = 0;
 
     private final List<Menu<? extends FoodItem>> categoryMenu = new ArrayList<>();
 
@@ -109,7 +109,7 @@ public class Kiosk<T extends FoodItem> { //#제네릭을 클래스에 쓴 이유
 
     //기능이 있는 메서드 집합
     //키오스크 카테고리메뉴 추가
-    public void addCategory(Menu<DessertItem> menu) {
+    public <T extends FoodItem> void addCategory(Menu<T> menu) {
         this.categoryMenu.add(menu);
     }
 
