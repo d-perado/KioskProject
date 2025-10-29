@@ -10,9 +10,9 @@ public class App {
 
 
     public static void main(String[] args) {
-        Menu<BuggerItem> burger = new Menu("Burgers");
-        Menu<DrinkItem> drink = new Menu("Drinks");
-        Menu<DessertItem> dessert = new Menu("Desserts");
+        Menu<BuggerItem> burger = new Menu<>("Burgers");
+        Menu<DrinkItem> drink = new Menu<>("Drinks");
+        Menu<DessertItem> dessert = new Menu<>("Desserts");
         burger.addMenuItems(new BuggerItem("ShackBurger", 6.9, "토마토, 양상추, 쉑소스가 토핑된 치즈버거"));
         burger.addMenuItems(new BuggerItem("SmokeShack", 8.9, "베이컨, 체리 페퍼에 쉑소스가 토핑된 치즈버거"));
         burger.addMenuItems(new BuggerItem("Cheeseburger", 6.9, "포테이토 번과 비프패티, 치즈가 토핑된 치즈버거"));
