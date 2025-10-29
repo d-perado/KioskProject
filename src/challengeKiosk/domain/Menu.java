@@ -31,7 +31,7 @@ public class Menu <T extends FoodItem> {
     }
     public T getMenuItem(int i) {
         /* 메뉴아이템 하나 반환 */
-        return menuItems.get(i);
+        return this.menuItems.get(i);
     }
 
 
