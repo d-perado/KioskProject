@@ -129,16 +129,10 @@ public class Kiosk {
     //장바구니 총액 계산
     public double getTotalPrice() {
         double totalPrice = 0.0;
-        for (Menu<? extends FoodItem> menu : categoryMenu) {
-            for (int j = 0; j < menu.getMenuItems().size(); j++) {
                 for (Map.Entry<FoodItem, Integer> cartItem : cart.getSelectedItems().entrySet()) {
-                    if (cartItem.getKey().equals(menu.getMenuItems().get(j))) {
-                        totalPrice += menu.getMenuItems().get(j).getPrice() * cartItem.getValue();
+                        totalPrice += cartItem.getKey().getPrice() * cartItem.getValue();
                         break;
-                    }
-                }
             }
-        }
         return totalPrice;
     }
 
