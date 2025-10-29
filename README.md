@@ -35,7 +35,7 @@ java version "17.0.12" 2024-07-16 LTS
 
 ---
 
-## 🛠 기술 스택
+## 기술 스택
 - Java 17 (LTS) — `java version "17.0.12"`
 - 빌드 도구: 없음(단순 자바 프로젝트 / IDE 기반 실행 권장)
 - 주요 패키지: `challengeKiosk` (예시)
@@ -66,7 +66,7 @@ java -cp out challengeKiosk.Kiosk
 
 ---
 
-## 📁 프로젝트 구조 (예시)
+## 프로젝트 구조 (예시)
 ```
 KioskProject/
 ├─ src/
