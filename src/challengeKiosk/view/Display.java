@@ -30,27 +30,29 @@ public class Display {
         }
     }
 
-//    //장바구니 메뉴 출력##
-//    public void displayCartMenu(Cart cart, double totalPrice, double discount) {
-//        System.out.println("[ Orders ]");
-//        int cnt = 1;
-//        Map<String, Integer> items = cart.getSelectedItems();
-//        /* 장바구니 물품 출력 */
-//        for (Map.Entry<String, Integer> key : cart.getSelectedItems().entrySet()) {
-//            System.out.printf("%2d. %10s | W %-5.1f | %d개 | %s\n",
-//                    cnt++, key.getKey(), key.getPrice(),
-//                    items.get(key), key.getInformation());
-//        }
-//        System.out.println();
-//        System.out.println("[ Total ]");
-//        System.out.printf("할인 적용 전 | W %3.1f\n", totalPrice);
-//        System.out.printf("할인 적용 후 | W %3.1f\n", totalPrice * discount);
-//
-//    }
+    //장바구니 메뉴 출력##
+    public void displayCartMenu(Cart cart, double totalPrice, double discount) {
+        System.out.println("[ Orders ]");
+        int cnt = 1;
+        /* 장바구니 물품 출력 */
+        for (Map.Entry<FoodItem, Integer> key : cart.getSelectedItems().entrySet()) {
+
+
+
+
+            System.out.printf("%2d. %10s | W %-5.1f | %d개 | %s\n", cnt++, key.getKey().getName(), key.getKey().getPrice(), key.getValue(), key.getKey().getInformation());
+        }
+
+        System.out.println();
+        System.out.println("[ Total ]");
+        System.out.printf("할인 적용 전 | W %3.1f\n", totalPrice);
+        System.out.printf("할인 적용 후 | W %3.1f\n", totalPrice * discount);
+
+    }
 
     public void displayAddCartItemConfirm(int selectMerchandise, Cart cart, Menu<? extends FoodItem>categoryMenu) {
         /* 장바구니 물품 추가 확정 */
-        String Item = categoryMenu.getMenuItem(selectMerchandise - 1).getName();
+        FoodItem Item = categoryMenu.getMenuItem(selectMerchandise - 1);
         cart.add(Item);
         System.out.println(Item + " 이 장바구니에 추가되었습니다.");
     }

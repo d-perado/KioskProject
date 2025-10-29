@@ -42,8 +42,8 @@ public class Kiosk<T extends FoodItem> { //#제네릭을 클래스에 쓴 이유
                 } else if (selectCategory == categoryMenu.size() + 1) {
                     /* 장바구니 물품 주문하기 */
                     System.out.println("아래와 같이 주문하시겠습니까?");
-
-//##                    display.displayCartMenu(cart, customer);?
+                    double totalPrice = getTotalPrice();
+                    display.displayCartMenu(cart, totalPrice, customer.getDiscount());
 
                     System.out.printf("%d. 주문\n",cart.getSelectedItems().size()+1);
                     System.out.printf("%d. 할인혜택보기\n",cart.getSelectedItems().size()+2);
@@ -55,7 +55,6 @@ public class Kiosk<T extends FoodItem> { //#제네릭을 클래스에 쓴 이유
 
                     if (deleteItemOption == cart.getSelectedItems().size() + 1) {
                         /* 주문 확정 출력 */
-                        double totalPrice = getTotalPrice();
                         display.displayOrderComplete(customer,cart,totalPrice);
                         continue;
                     } else if (deleteItemOption==cart.getSelectedItems().size() + 2){
@@ -133,8 +132,8 @@ public class Kiosk<T extends FoodItem> { //#제네릭을 클래스에 쓴 이유
         double totalPrice = 0.0;
         for(int i = 0; i < categoryMenu.size(); i++) {
             for(int j = 0; j < categoryMenu.get(i).getMenuItems().size(); j++) {
-                for(Map.Entry<String, Integer> cartItem : cart.getSelectedItems().entrySet()) {
-                    if(cartItem.getKey().equals(categoryMenu.get(i).getMenuItems().get(j).getName())){
+                for(Map.Entry<FoodItem, Integer> cartItem : cart.getSelectedItems().entrySet()) {
+                    if(cartItem.getKey().equals(categoryMenu.get(i).getMenuItems().get(j))){
                         totalPrice += categoryMenu.get(i).getMenuItems().get(j).getPrice()*cartItem.getValue();
                         break;
                     }
