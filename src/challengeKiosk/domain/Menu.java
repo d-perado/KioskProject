@@ -20,8 +20,8 @@ public class Menu <T extends FoodItem> {
         return this.category;
     }
 
-    //메뉴아이템 전체 출력
     public void printMenuItems() {
+        /* 메뉴아이템 전체 출력*/
         int i = 1;
         for (T menuItem : this.menuItems) {
             System.out.printf("%2d. %-20s| W%-5.1f|\t%-5s\n", i++, menuItem.getName()
@@ -29,19 +29,19 @@ public class Menu <T extends FoodItem> {
                     , menuItem.getInformation());
         }
     }
-    //메뉴아이템 하나 반환
     public T getMenuItem(int i) {
+        /* 메뉴아이템 하나 반환 */
         return menuItems.get(i);
     }
 
 
-    //메뉴아이템 전체리스트 반환 함수
     public List<T> getMenuItems() {
+        /* 메뉴아이템 전체리스트 반환 함수 */
         return new ArrayList<>(this.menuItems);
     }
 
-    //메뉴아이템추가
     public void addMenuItems(T menuItem) {
+        /* 메뉴아이템추가 */
         this.menuItems.add(menuItem);
     }
 
