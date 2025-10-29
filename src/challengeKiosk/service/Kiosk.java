@@ -22,8 +22,8 @@ public class Kiosk {
     }
 
     // 기능
-    //키오스크 시작
     public void start() {
+        /* 키오스크 시작 */
         int selectCategory = -1;
         boolean isKiosk = true;
         while (isKiosk) {
@@ -77,11 +77,12 @@ public class Kiosk {
                     }
 
                 } else if (selectCategory == categoryMenu.size() + 2) {
-                    /* 주문 취소 선택 */
+                    /* 주문 전체 취소 선택 */
                     int cancelOrder = getUserInput("주문을 전체 취소하시겠습니까? 1.취소 2.아니오 : ",1,2);
 
                     if ( cancelOrder == 1 ){
-                        display.displayCartCancel(cart);
+                        cart.clearItem();
+                        System.out.println("주문이 취소되었습니다.");
                         continue;
                     }
                 } else {
@@ -108,27 +109,28 @@ public class Kiosk {
     }
 
     //기능이 있는 메서드 집합
-    //키오스크 카테고리메뉴 추가
     public <T extends FoodItem> void addCategory(Menu<T> menu) {
+        /* 키오스크 카테고리메뉴 추가 */
         this.categoryMenu.add(menu);
     }
 
-    //할인 혜택 변경
     private void selectCustomerOption(int customerOption){
+        /* 할인 혜택 변경 */
         Arrays.stream(Customer.values())
                 .filter(option -> option.ordinal() == customerOption - 1)
                 .findFirst()
                 .ifPresent(this::setCustomer);
     }
 
-    //할인 혜택 설정
     private void setCustomer(Customer customer) {
+        /* 할인 혜택 설정 */
         System.out.printf("고객님의 할인 유형이 %s로 전환됩니다.\n", customer.getOption());
         this.customer = customer;
     }
 
-    //장바구니 총액 계산
+
     public double getTotalPrice() {
+        /* 장바구니 총액 계산 */
         double totalPrice = 0.0;
                 for (Map.Entry<FoodItem, Integer> cartItem : cart.getSelectedItems().entrySet()) {
                         totalPrice += cartItem.getKey().getPrice() * cartItem.getValue();
@@ -138,8 +140,8 @@ public class Kiosk {
     }
 
     //입력 메서드
-    //사용자 int값 입력
     private int getUserInput(String message, int min, int max) {
+        /* 사용자 int값 입력 */
         System.out.println();
         while (true) {
             try {

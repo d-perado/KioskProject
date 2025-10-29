@@ -12,6 +12,7 @@ import java.util.stream.IntStream;
 public class Display {
 
     public void displayMainMenu(List<Menu<? extends FoodItem>> categoryMenu, Cart cart) {
+        /* 메인 메뉴 출력 */
         System.out.println("[ Main Menu ]");
         for (int i = 0; i < categoryMenu.size(); i++) {
             System.out.println((i + 1) + "." + categoryMenu.get(i).getCategory());
@@ -27,8 +28,8 @@ public class Display {
         }
     }
 
-    //장바구니 메뉴 출력##
     public void displayCartMenu(Cart cart, double totalPrice, double discount) {
+        /* 장바구니 메뉴 출력 */
         System.out.println("[ Orders ]");
         int cnt = 1;
         /* 장바구니 물품 출력 */
@@ -52,8 +53,8 @@ public class Display {
         System.out.println(Item.getName() + " 이 장바구니에 추가되었습니다.");
     }
 
-    //주문 확정 출력##
     public void displayOrderComplete(Customer customer, Cart cart, double discountPrice) {
+        /* 주문 확정 출력 */
         if (!customer.equals(Customer.NORMAL)) {
             System.out.println(customer.getOption() + "(" + (int)((1.0-customer.getDiscount())*100.0) + "%)의 할인율이 제공되었습니다.");
         }
@@ -61,23 +62,18 @@ public class Display {
         cart.clearItem();
     }
 
-    //할인 혜택 출력
     public void displayCustomerOption() {
+        /* 할인 혜택 출력 */
         System.out.println("[ CustomerOptions ]");
         IntStream.range(0, Customer.values().length)
                 .forEach(i -> System.out.println((i + 1) + ". " + Customer.values()[i].getOption()));
     }
 
-    //선택한 카테고리 메뉴 출력
     public <T extends FoodItem> void displayCategoryMenu(Menu<T> categoryMenu) {
+        /* 선택한 카테고리 메뉴 출력 */
         System.out.println("=====" + categoryMenu.getCategory() + "=====");
         categoryMenu.printMenuItems();
         System.out.println("0. 뒤로가기");
     }
 
-    //주문 취소 출력
-    public void displayCartCancel(Cart cart) {
-        System.out.println("주문이 취소되었습니다.");
-        cart.clearItem();
-    }
 }
