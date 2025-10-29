@@ -50,6 +50,11 @@
 
 <img width="384" height="248" alt="image" src="https://github.com/user-attachments/assets/4b2127dd-1473-40e6-a991-f3f94a8b65c3" />
 
+물품 전체 취소
+
+<img width="379" height="201" alt="image" src="https://github.com/user-attachments/assets/afb96a1d-d527-4169-b965-ad823b8d03b6" />
+
+
 
 
 
