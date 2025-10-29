@@ -50,7 +50,7 @@ public class Display {
         /* 장바구니 물품 추가 확정 */
         FoodItem Item = categoryMenu.getMenuItem(selectMerchandise - 1);
         cart.add(Item);
-        System.out.println(Item + " 이 장바구니에 추가되었습니다.");
+        System.out.println(Item.getName() + " 이 장바구니에 추가되었습니다.");
     }
 
     //주문 확정 출력##
