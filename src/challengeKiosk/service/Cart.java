@@ -9,8 +9,6 @@ import java.util.stream.Collectors;
 public class Cart {
     //속성
     private final Map<FoodItem,Integer> cartItem = new LinkedHashMap<>();
-    //생성자
-
 
     //기능
     //선택한 물품 반환
@@ -58,7 +56,6 @@ public class Cart {
                     }
                 });
     }
-
 
     //장바구니 비우기
     public void clearItem(){

@@ -30,7 +30,7 @@ public class Menu <T extends FoodItem> {
         }
     }
     //메뉴아이템 하나 반환
-    public T getMenuItem(int i){
+    public T getMenuItem(int i) {
         return menuItems.get(i);
     }
 

@@ -7,12 +7,12 @@ import java.util.*;
 
 public class Kiosk {
     // 속성
-    private Customer customer = Customer.NORMAL;
+    private final Scanner sc = new Scanner(System.in);
+
     private static final int EXIT = 0;
+    private Customer customer = Customer.NORMAL;
 
     private final List<Menu<? extends FoodItem>> categoryMenu = new ArrayList<>();
-
-    private Scanner sc = new Scanner(System.in);
     private final Cart cart = new Cart();
 
     private static final Display display = new Display();
@@ -106,7 +106,6 @@ public class Kiosk {
         }
     }
 
-
     //기능이 있는 메서드 집합
     //키오스크 카테고리메뉴 추가
     public <T extends FoodItem> void addCategory(Menu<T> menu) {
@@ -130,21 +129,17 @@ public class Kiosk {
     //장바구니 총액 계산
     public double getTotalPrice() {
         double totalPrice = 0.0;
-        for(int i = 0; i < categoryMenu.size(); i++) {
-            for(int j = 0; j < categoryMenu.get(i).getMenuItems().size(); j++) {
-                for(Map.Entry<FoodItem, Integer> cartItem : cart.getSelectedItems().entrySet()) {
-                    if(cartItem.getKey().equals(categoryMenu.get(i).getMenuItems().get(j))){
-                        totalPrice += categoryMenu.get(i).getMenuItems().get(j).getPrice()*cartItem.getValue();
+        for (Menu<? extends FoodItem> menu : categoryMenu) {
+            for (int j = 0; j < menu.getMenuItems().size(); j++) {
+                for (Map.Entry<FoodItem, Integer> cartItem : cart.getSelectedItems().entrySet()) {
+                    if (cartItem.getKey().equals(menu.getMenuItems().get(j))) {
+                        totalPrice += menu.getMenuItems().get(j).getPrice() * cartItem.getValue();
                         break;
                     }
+                }
             }
         }
-    }
         return totalPrice;
-    }
-
-    public double getTotalPriceAfterDiscount(double discount) {
-        return getTotalPrice()*discount;
     }
 
     //입력 메서드

@@ -11,9 +11,7 @@ import java.util.stream.IntStream;
 
 public class Display {
 
-    // 다음 고민할 거는 매개변수들이 정말 외부에서 받아야 하는것 인가 넘겨줘야하는것인가?
-
-    public <T extends FoodItem> void displayMainMenu(List<Menu<? extends FoodItem>> categoryMenu, Cart cart) {
+    public void displayMainMenu(List<Menu<? extends FoodItem>> categoryMenu, Cart cart) {
 
         System.out.println("[ Main Menu ]");
         for (int i = 0; i < categoryMenu.size(); i++) {
@@ -36,11 +34,9 @@ public class Display {
         int cnt = 1;
         /* 장바구니 물품 출력 */
         for (Map.Entry<FoodItem, Integer> key : cart.getSelectedItems().entrySet()) {
-
-
-
-
-            System.out.printf("%2d. %10s | W %-5.1f | %d개 | %s\n", cnt++, key.getKey().getName(), key.getKey().getPrice(), key.getValue(), key.getKey().getInformation());
+            System.out.printf("%2d. %10s | W %-5.1f | %d개 | %s\n", cnt++
+                    , key.getKey().getName(), key.getKey().getPrice()
+                    , key.getValue(), key.getKey().getInformation());
         }
 
         System.out.println();
@@ -59,8 +55,8 @@ public class Display {
 
     //주문 확정 출력##
     public void displayOrderComplete(Customer customer, Cart cart, double discountPrice) {
-        if(!customer.equals(Customer.NORMAL)){
-            System.out.println(customer.getOption()+"("+(int)((1.0-customer.getDiscount())*100.0)+"%)의 할인율이 제공되었습니다.");
+        if (!customer.equals(Customer.NORMAL)) {
+            System.out.println(customer.getOption() + "(" + (int)((1.0-customer.getDiscount())*100.0) + "%)의 할인율이 제공되었습니다.");
         }
         System.out.printf("주문이 완료되었습니다. 총 결제 금액은 W %3.1f 입니다.\n", discountPrice);
         cart.clearItem();
@@ -81,7 +77,7 @@ public class Display {
     }
 
     //주문 취소 출력
-    public void displayCartCancel(Cart cart){
+    public void displayCartCancel(Cart cart) {
         System.out.println("주문이 취소되었습니다.");
         cart.clearItem();
     }
