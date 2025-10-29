@@ -12,16 +12,15 @@ import java.util.stream.IntStream;
 public class Display {
 
     public void displayMainMenu(List<Menu<? extends FoodItem>> categoryMenu, Cart cart) {
-
         System.out.println("[ Main Menu ]");
         for (int i = 0; i < categoryMenu.size(); i++) {
             System.out.println((i + 1) + "." + categoryMenu.get(i).getCategory());
         }
 
         System.out.println("0.종료\t|\t종료");
-        System.out.println();
 
         if (!cart.getSelectedItems().isEmpty()) {
+            System.out.println();
             System.out.println("[ ORDER MENU ]");
             System.out.println((categoryMenu.size() + 1) + ".Orders | 장바구니를 확인후 주문합니다.");
             System.out.println((categoryMenu.size() + 2) + ".Cancel | 진행중인 주문을 취소합니다.");

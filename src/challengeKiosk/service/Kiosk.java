@@ -45,12 +45,13 @@ public class Kiosk {
                     double totalPrice = getTotalPrice();
                     display.displayCartMenu(cart, totalPrice, customer.getDiscount());
 
+                    System.out.println();
                     System.out.printf("%d. 주문\n",cart.getSelectedItems().size()+1);
                     System.out.printf("%d. 할인혜택보기\n",cart.getSelectedItems().size()+2);
                     System.out.println("0. 메뉴판으로 돌아가기");
 
                     System.out.println("============================");
-                    int deleteItemOption = getUserInput("취소할 상품을 선택해주세요. : ",0
+                    int deleteItemOption = getUserInput("취소할 상품을 선택하시거나,\n원하시는 메뉴를 선택하세요. : ",0
                             ,cart.getSelectedItems().size() + 2);
 
                     if (deleteItemOption == cart.getSelectedItems().size() + 1) {
@@ -139,11 +140,13 @@ public class Kiosk {
     //입력 메서드
     //사용자 int값 입력
     private int getUserInput(String message, int min, int max) {
+        System.out.println();
         while (true) {
             try {
                 System.out.print(message);
                 int input = sc.nextInt();
                 if (input < min || input > max) throw new InputMismatchException();
+                System.out.println();
                 return input;
             } catch (InputMismatchException e) {
                 System.out.println("올바른 숫자를 입력하세요.");
