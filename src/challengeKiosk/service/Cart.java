@@ -52,7 +52,7 @@ public class Cart {
                     if (amount == 0) {
                         cartItem.remove(entry.getKey());
                     } else {
-                        cartItem.replace(entry.getKey(), amount - 1);
+                        cartItem.replace(entry.getKey(), amount);
                     }
                 });
     }
