@@ -134,7 +134,6 @@ public class Kiosk {
         double totalPrice = 0.0;
                 for (Map.Entry<FoodItem, Integer> cartItem : this.cart.getSelectedItems().entrySet()) {
                         totalPrice += cartItem.getKey().getPrice() * cartItem.getValue();
-                        break;
             }
         return totalPrice;
     }
